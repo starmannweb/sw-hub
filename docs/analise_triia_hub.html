@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Análise do Sistema Triia Hub</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+        
+        .header {
+            text-align: center;
+            border-bottom: 2px solid #ea580c;
+            padding-bottom: 20px;
+            margin-bottom: 40px;
+        }
+
+        h1 {
+            color: #0f172a;
+            font-size: 2.2rem;
+            margin-bottom: 10px;
+        }
+
+        .subtitle {
+            color: #64748b;
+            font-size: 1.1rem;
+        }
+
+        h2 {
+            color: #ea580c;
+            border-bottom: 1px solid #e2e8f0;
+            padding-bottom: 8px;
+            margin-top: 40px;
+        }
+
+        h3 {
+            color: #1e293b;
+            margin-top: 25px;
+        }
+
+        .section {
+            background-color: #f8fafc;
+            border-left: 4px solid #ea580c;
+            padding: 20px;
+            margin-bottom: 30px;
+            border-radius: 0 8px 8px 0;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+        }
+
+        ul {
+            padding-left: 20px;
+        }
+
+        li {
+            margin-bottom: 10px;
+        }
+
+        strong {
+            color: #0f172a;
+        }
+
+        .ref-box {
+            background-color: #f1f5f9;
+            padding: 15px;
+            border-radius: 8px;
+            margin-top: 40px;
+            font-size: 0.9rem;
+        }
+
+        .ref-box a {
+            color: #ea580c;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        @media print {
+            body { background: white; padding: 0; }
+            .section { page-break-inside: avoid; background-color: white; border: 1px solid #e2e8f0; border-left: 4px solid #ea580c; }
+            h2 { page-break-after: avoid; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="header">
+        <h1>Análise Estrutural: Triia Hub</h1>
+        <p class="subtitle">Documento de Levantamento de Funcionalidades e Referência Arquitetural para o projeto Hub</p>
+    </div>
+
+    <p>Este documento foi gerado a partir da exploração analítica do ambiente <strong>Triia Hub</strong>, com o intuito de listar e detalhar as funcionalidades que fazem da plataforma um modelo robusto "All-in-One". Estas informações servem de guia referencial para o desenvolvimento e evolução do nosso próprio ecossistema.</p>
+
+    <div class="section">
+        <h2>1. 📇 CRM de Vendas e Oportunidades (Pipelines)</h2>
+        <ul>
+            <li><strong>Leads (Oportunidades):</strong> Sistema ágil de <em>Funis de Vendas estilo Kanban</em> (arrastar e soltar cartões). Permite mover leads entre diferentes pipelines e visualizar etapas personalizadas (Novo, Em Contato, Negociação, Ganho, Perdido, Abandonado).</li>
+            <li><strong>Contatos (CRM):</strong> Tabela central inteligente. Suporta "Smart Lists" (filtros dinâmicos e salvos), com capacidade de aplicar ações em massa (adicionar tag, enviar disparo de comunicação, atualizar etapas do funil).</li>
+            <li><strong>Organização B2B:</strong> Recurso avançado para associar contatos a <em>Empresas</em>, estruturando negociações complexas.</li>
+        </ul>
+    </div>
+
+    <div class="section">
+        <h2>2. 💬 Comunicação e Caixa de Entrada Unificada (Omnichannel)</h2>
+        <ul>
+            <li><strong>Unified Inbox:</strong> Uma robusta caixa de entrada que agrupa mensagens de todos os canais do cliente (WhatsApp, Facebook Messenger, Instagram DMs, SMS e E-mails) em um único histórico unificado.</li>
+            <li><strong>Respostas Rápidas e Links de Apoio:</strong> Cadastramento de <em>Snippets</em> (templates rápidos) e atalhos na interface de chat para enviar links de pagamento e propostas em tempo real.</li>
+        </ul>
+    </div>
+
+    <div class="section">
+        <h2>3. 🤖 Automação de Processos (Workflows) e IA</h2>
+        <ul>
+            <li><strong>Construtor de Workflows:</strong> Editor visual (estilo fluxograma) para criar sequências lógicas automáticas baseadas nos <em>Gatilhos</em> acionados pelo cliente, gerando <em>Ações</em> na linha do tempo.</li>
+            <li><strong>Agentes de AI:</strong> Robôs de IA que compreendem o contexto baseado em uma <em>Base de Conhecimento (Knowledge Base)</em> contendo PDFs e URLs próprios da empresa. A IA conversa de forma fluída via texto no WhatsApp e também via ligações de voz.</li>
+        </ul>
+    </div>
+
+    <div class="section">
+        <h2>4. 🎨 Construtores e Experiência Web</h2>
+        <ul>
+            <li><strong>Sites e Funis (Funnels):</strong> Construtor <em>Drag-and-Drop</em> que permite estruturar páginas sequenciais de captura, vendas e destino.</li>
+            <li><strong>Formulários Avançados e Quizzes:</strong> Widgets que podem ser incorporados aos sites para coleta interativa de dados do lead (etapas multi-step).</li>
+            <li><strong>Mídia Drive:</strong> Repositório central na nuvem para organizar as bibliotecas visuais das empresas e permitir o uso unificado nas ferramentas.</li>
+        </ul>
+    </div>
+
+    <div class="section">
+        <h2>5. 📅 Agendamentos</h2>
+        <ul>
+            <li><strong>Calendários:</strong> Sistema substituto ao Calendly. Sincroniza agenda externa, exibe blocos vazios e permite criar "Round-Robins" (roleta de distribuição) baseados na fila da equipe de vendas para balancear as recepções de leads.</li>
+        </ul>
+    </div>
+
+    <div class="section">
+        <h2>6. 📢 Marketing e Tráfego</h2>
+        <ul>
+            <li><strong>Social Planner:</strong> Módulo para agendar e publicar organicamente em múltiplos canais simultâneos (Instagram, LinkedIn, Google Business, TikTok, Facebook).</li>
+            <li><strong>E-mail Marketing:</strong> Interface para criar disparos massivos em newsletters e rastrear funis de abertura e rejeição.</li>
+            <li><strong>Relatórios de Anúnveis (Ad Reports):</strong> Integração nativa com APIs de Google Ads e Facebook Ads para medir, internamente, como as campanhas interagem com as oportunidades ganhas do CRM.</li>
+        </ul>
+    </div>
+
+    <div class="section">
+        <h2>7. 💳 Faturamento e Educação</h2>
+        <ul>
+            <li><strong>Pagamentos e links:</strong> Emissão ágil de boletos, cobranças avulsas, vendas sob assinatura via gateways.</li>
+            <li><strong>Área de Membros (Memberships):</strong> Estrutura pronta para criar vídeos, aulas, trilhas contínuas e conteúdos trancados por níveis de acesso, competindo com serviços estilo Hotmart ou Kajabi.</li>
+        </ul>
+    </div>
+
+    <div class="section">
+        <h2>8. ⭐ Gestão de Reputação</h2>
+        <ul>
+            <li><strong>Controle de Avaliações:</strong> Consome feeds do <em>Google Meu Negócio</em> e <em>Facebook Reviews</em>, respondendo diretamente e induzindo clientes engajados no pós-venda a preencher depoimentos nas redes para subir o SEO orgânico da companhia.</li>
+        </ul>
+    </div>
+
+    <div class="ref-box">
+        <strong>Acesso de Referência ao Ambiente:</strong><br>
+        URL Explorada: <a href="https://sistema.triiahub.com/v2/location/8v8iYw6bE3rA0HNLpD2i/dashboard" target="_blank">Dashboard Triia Hub</a>
+    </div>
+
+    <script>
+        // Opcional: auto-sugerir a impressão para salvar em PDF ao abrir a página
+        // window.onload = function() { window.print(); }
+    </script>
+</body>
+</html>

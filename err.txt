@@ -1,0 +1,3 @@
+src/app/(dashboard)/contatos/[id]/components/contact-notes.tsx(9,26): error TS2307: Cannot find module '@/components/ui/textarea' or its corresponding type declarations.
+src/app/(dashboard)/contatos/[id]/components/contact-notes.tsx(98,32): error TS7006: Parameter 'e' implicitly has an 'any' type.
+src/app/(dashboard)/contatos/[id]/page.tsx(14,58): error TS2307: Cannot find module '@/components/ui/tabs' or its corresponding type declarations.

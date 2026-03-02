@@ -1,5 +1,12 @@
+# Hub Project
+
 This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
 
+## 🗺️ Mapa de Funcionalidades e Arquitetura do Sistema
+Para acessar a documentação detalhada de todas as funcionalidades, módulos e integrações que o nosso **Hub** abrange, consulte o [Mapa de Funcionalidades do Sistema](./docs/SYSTEM_FEATURES.md).
+
+### 🏗️ Construtor de Sites (Website Builder)
+Para entender como testar, abrir e como está o status do nosso construtor de páginas estilo arrastar-e-soltar, consulte o [Guia do Construtor de Sites](./docs/WEBSITE_BUILDER.md).
 ## Getting Started
 
 First, run the development server:

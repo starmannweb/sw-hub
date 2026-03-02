@@ -1,0 +1,3 @@
+﻿src/app/(dashboard)/sites/[id]/editor/components/custom-builder/left-sidebar.tsx(4,139): error TS2724: '"lucide-react"' has no exported member named 'MousePointerSquare'. Did you mean 'MousePointer'?
+src/app/(dashboard)/sites/[id]/editor/components/custom-builder/right-sidebar.tsx(8,24): error TS2307: Cannot find module '@/components/ui/switch' or its corresponding type declarations.
+src/app/(dashboard)/sites/[id]/editor/components/custom-builder/right-sidebar.tsx(10,78): error TS2307: Cannot find module '@/components/ui/accordion' or its corresponding type declarations.
