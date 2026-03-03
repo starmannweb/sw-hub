@@ -139,28 +139,36 @@ export default function ReplicatePage() {
                     <ArrowLeft className="w-4 h-4 mr-2" /> Voltar
                 </button>
 
-                <div className="flex items-center justify-between relative px-4">
-                    {/* Line behind steps */}
-                    <div className="absolute top-[16px] left-[10%] right-[10%] h-[2px] bg-[#292932] -z-10 rounded-full"></div>
-                    <div className="absolute top-[16px] left-[10%] h-[2px] bg-[#8b5cf6] -z-10 transition-all duration-500 rounded-full"
-                        style={{ width: `${((step - 1) / 3) * 80}%` }}></div>
+                <div className="flex items-center justify-between relative">
+                    {/* Background line */}
+                    <div className="absolute top-[18px] left-[8%] right-[8%] h-[2px] bg-[#2a2a35]"></div>
+                    {/* Active progress line */}
+                    <div className="absolute top-[18px] left-[8%] h-[2px] bg-[#8b5cf6] transition-all duration-700 ease-out"
+                        style={{ width: `${((step - 1) / 3) * 84}%` }}></div>
 
                     {[
                         { id: 1, label: 'Selecionar' },
                         { id: 2, label: 'Configurar Site' },
                         { id: 3, label: 'Replicar Site' },
                         { id: 4, label: 'Personalizar' },
-                    ].map((s) => (
-                        <div key={s.id} className="flex flex-col items-center gap-3">
-                            <div className={`w-[34px] h-[34px] rounded-full flex items-center justify-center font-medium text-[15px] transition-all
-                                ${step >= s.id ? 'bg-[#8b5cf6] text-white shadow-[0_0_15px_rgba(139,92,246,0.2)]' : 'bg-[#0b0b10] border border-[#292932] text-[#71717a]'}`}>
-                                {s.id}
+                    ].map((s) => {
+                        const isActive = step >= s.id
+                        return (
+                            <div key={s.id} className="flex flex-col items-center gap-2.5 z-10">
+                                <div className={`w-[38px] h-[38px] rounded-full flex items-center justify-center text-[15px] font-semibold transition-all duration-300
+                                    ${isActive
+                                        ? 'bg-[#8b5cf6] text-white shadow-[0_0_20px_rgba(139,92,246,0.4)]'
+                                        : 'bg-[#12121a] border-[1.5px] border-[#3a3a48] text-[#55556a]'
+                                    }`}>
+                                    {s.id}
+                                </div>
+                                <span className={`text-[12px] font-medium tracking-wide transition-colors duration-300
+                                    ${isActive ? 'text-[#e4e4e7]' : 'text-[#55556a]'}`}>
+                                    {s.label}
+                                </span>
                             </div>
-                            <span className={`text-[13px] font-semibold tracking-wide ${step >= s.id ? 'text-white' : 'text-[#52525b]'}`}>
-                                {s.label}
-                            </span>
-                        </div>
-                    ))}
+                        )
+                    })}
                 </div>
             </div>
 
