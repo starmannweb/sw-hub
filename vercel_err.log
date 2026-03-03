@@ -1,0 +1,4 @@
+WARN! Build not running on Vercel. System environment variables will not be available.
+WARNING: You should not upload the `.next` directory.
+⚠ The "middleware" file convention is deprecated. Please use "proxy" instead. Learn more: https://nextjs.org/docs/messages/middleware-to-proxy
+Error: EPERM: operation not permitted, symlink '..\sites\[id]\pages\[pageId]\editor.func' -> 'C:\Users\Ricieri\Desktop\Projetos\Hub\hub-app\.vercel\output\functions\admin\modelos.func'

@@ -1,0 +1,95 @@
+Installing dependencies...
+
+up to date in 1s
+
+236 packages are looking for funding
+  run `npm fund` for details
+Detected Next.js version: 16.1.6
+Running "npm run build"
+
+> hub-app@0.1.0 build
+> next build
+
+▲ Next.js 16.1.6 (Turbopack)
+- Environments: .env.local
+
+  Creating an optimized production build ...
+✓ Compiled successfully in 7.7s
+  Running TypeScript ...
+  Collecting page data using 15 workers ...
+  Generating static pages using 15 workers (0/25) ...
+  Generating static pages using 15 workers (6/25) 
+  Generating static pages using 15 workers (12/25) 
+  Generating static pages using 15 workers (18/25) 
+✓ Generating static pages using 15 workers (25/25) in 703.9ms
+  Finalizing page optimization ...
+
+Route (app)
+┌ ƒ /
+├ ○ /_not-found
+├ ƒ /admin/modelos
+├ ƒ /afiliados
+├ ƒ /api/webhooks/forms
+├ ƒ /auth/callback
+├ ƒ /automacoes
+├ ƒ /colaboracao/projetos
+├ ƒ /colaboracao/tarefas
+├ ƒ /configuracoes
+├ ƒ /contatos
+├ ƒ /contatos/[id]
+├ ƒ /conversas
+├ ƒ /crm/contatos
+├ ƒ /crm/negocios
+├ ƒ /financeiro/faturas
+├ ƒ /financeiro/propostas
+├ ○ /login
+├ ○ /registro
+├ ƒ /relatorios
+├ ƒ /sites
+├ ƒ /sites-beta
+├ ƒ /sites/[id]
+├ ƒ /sites/[id]/pages/[pageId]/editor
+├ ƒ /sites/admin
+└ ƒ /sites/new
+
+
+ƒ Proxy (Middleware)
+
+○  (Static)   prerendered as static content
+ƒ  (Dynamic)  server-rendered on demand
+
+Tracing initial Next.js server files due to missing build trace: 8.826s
+Traced Next.js server files in: 9.644s
+Tracing entries due to missing build traces:
+[
+  "C:/Users/Ricieri/Desktop/Projetos/Hub/hub-app/.next/server/app/(builder)/sites/[id]/pages/[pageId]/editor/page.js",
+  "C:/Users/Ricieri/Desktop/Projetos/Hub/hub-app/.next/server/app/(dashboard)/admin/modelos/page.js",
+  "C:/Users/Ricieri/Desktop/Projetos/Hub/hub-app/.next/server/app/(dashboard)/afiliados/page.js",
+  "C:/Users/Ricieri/Desktop/Projetos/Hub/hub-app/.next/server/app/(dashboard)/automacoes/page.js",
+  "C:/Users/Ricieri/Desktop/Projetos/Hub/hub-app/.next/server/app/(dashboard)/colaboracao/projetos/page.js",
+  "C:/Users/Ricieri/Desktop/Projetos/Hub/hub-app/.next/server/app/(dashboard)/colaboracao/tarefas/page.js",
+  "C:/Users/Ricieri/Desktop/Projetos/Hub/hub-app/.next/server/app/(dashboard)/configuracoes/page.js",
+  "C:/Users/Ricieri/Desktop/Projetos/Hub/hub-app/.next/server/app/(dashboard)/contatos/[id]/page.js",
+  "C:/Users/Ricieri/Desktop/Projetos/Hub/hub-app/.next/server/app/(dashboard)/contatos/page.js",
+  "C:/Users/Ricieri/Desktop/Projetos/Hub/hub-app/.next/server/app/(dashboard)/conversas/page.js",
+  "C:/Users/Ricieri/Desktop/Projetos/Hub/hub-app/.next/server/app/(dashboard)/crm/contatos/page.js",
+  "C:/Users/Ricieri/Desktop/Projetos/Hub/hub-app/.next/server/app/(dashboard)/crm/negocios/page.js",
+  "C:/Users/Ricieri/Desktop/Projetos/Hub/hub-app/.next/server/app/(dashboard)/financeiro/faturas/page.js",
+  "C:/Users/Ricieri/Desktop/Projetos/Hub/hub-app/.next/server/app/(dashboard)/financeiro/propostas/page.js",
+  "C:/Users/Ricieri/Desktop/Projetos/Hub/hub-app/.next/server/app/(dashboard)/page.js",
+  "C:/Users/Ricieri/Desktop/Projetos/Hub/hub-app/.next/server/app/(dashboard)/relatorios/page.js",
+  "C:/Users/Ricieri/Desktop/Projetos/Hub/hub-app/.next/server/app/(dashboard)/sites-beta/page.js",
+  "C:/Users/Ricieri/Desktop/Projetos/Hub/hub-app/.next/server/app/(dashboard)/sites/[id]/page.js",
+  "C:/Users/Ricieri/Desktop/Projetos/Hub/hub-app/.next/server/app/(dashboard)/sites/admin/page.js",
+  "C:/Users/Ricieri/Desktop/Projetos/Hub/hub-app/.next/server/app/(dashboard)/sites/new/page.js",
+  "C:/Users/Ricieri/Desktop/Projetos/Hub/hub-app/.next/server/app/(dashboard)/sites/page.js",
+  "C:/Users/Ricieri/Desktop/Projetos/Hub/hub-app/.next/server/app/_global-error/page.js",
+  "C:/Users/Ricieri/Desktop/Projetos/Hub/hub-app/.next/server/app/_not-found/page.js",
+  "C:/Users/Ricieri/Desktop/Projetos/Hub/hub-app/.next/server/app/login/page.js",
+  "C:/Users/Ricieri/Desktop/Projetos/Hub/hub-app/.next/server/app/registro/page.js",
+  "C:/Users/Ricieri/Desktop/Projetos/Hub/hub-app/.next/server/app/api/webhooks/forms/route.js",
+  "C:/Users/Ricieri/Desktop/Projetos/Hub/hub-app/.next/server/app/auth/callback/route.js",
+  "C:/Users/Ricieri/Desktop/Projetos/Hub/hub-app/.next/server/app/favicon.ico/route.js"
+]: 50.749ms
+Created all serverless functions in: 102.305ms
+Collected static files (public/, static/, .next/static): 9.244ms

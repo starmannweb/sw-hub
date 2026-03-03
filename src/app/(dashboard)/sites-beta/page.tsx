@@ -38,8 +38,28 @@ export default function SitesBetaPage() {
     const [leftPanelMode, setLeftPanelMode] = useState<'elements' | 'layers'>('layers') // updated based on screenshots
     const [selectedElement, setSelectedElement] = useState<'section' | 'headline' | 'vsl'>('section')
 
+    const handleEditorReady = (editor: any) => {
+        // Here we can load the cloned HTML if any is saved in localStorage
+        const cloneData = localStorage.getItem('site_clone_data')
+        if (cloneData) {
+            try {
+                const parsed = JSON.parse(cloneData)
+                if (parsed.html) {
+                    editor.setComponents(parsed.html)
+                }
+                if (parsed.css) {
+                    editor.setStyle(parsed.css)
+                }
+                // Limpa do local storage para não dar conflito em futuros reloads normais
+                localStorage.removeItem('site_clone_data')
+            } catch (e) {
+                console.error("Error loading clone data", e)
+            }
+        }
+    }
+
     return (
-        <GjsEditor grapesjs={grapesjs} options={gjsOptions}>
+        <GjsEditor grapesjs={grapesjs} options={gjsOptions} onEditor={handleEditorReady}>
             <div className="flex flex-col h-screen w-full overflow-hidden bg-[#16161a] text-[#b4b4c0] font-sans selection:bg-[#8b5cf6]/30">
 
                 {/* TOP BAR */}

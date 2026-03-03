@@ -59,74 +59,82 @@ export default function SitesPage() {
                         Crie landing pages, gerencie templates e publique seus projetos.
                     </p>
                 </div>
-                <Button onClick={() => router.push("/sites/new")}>
-                    <Plus className="mr-2 h-4 w-4" />
-                    Novo Site
-                </Button>
+                <div className="flex gap-2">
+                    <Button variant="outline" className="border-[#8b5cf6] text-[#8b5cf6] hover:bg-[#8b5cf6]/10" onClick={() => router.push("/sites/replicate")}>
+                        <Globe className="mr-2 h-4 w-4" />
+                        Replicador
+                    </Button>
+                    <Button onClick={() => router.push("/sites/new")}>
+                        <Plus className="mr-2 h-4 w-4" />
+                        Novo Projeto
+                    </Button>
+                </div>
             </div>
 
-            {loading ? (
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                    <Skeleton className="h-[250px] w-full rounded-xl" />
-                    <Skeleton className="h-[250px] w-full rounded-xl" />
-                    <Skeleton className="h-[250px] w-full rounded-xl" />
-                </div>
-            ) : sites.length === 0 ? (
-                <Card className="flex flex-col items-center justify-center py-12">
-                    <div className="rounded-full bg-primary/10 p-4 mb-4">
-                        <Globe className="h-8 w-8 text-primary" />
+            {
+                loading ? (
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                        <Skeleton className="h-[250px] w-full rounded-xl" />
+                        <Skeleton className="h-[250px] w-full rounded-xl" />
+                        <Skeleton className="h-[250px] w-full rounded-xl" />
                     </div>
-                    <CardTitle className="mb-2">Nenhum site ainda</CardTitle>
-                    <CardDescription className="mb-6 text-center max-w-sm">
-                        Você ainda não criou nenhum site ou landing page. Clique no botão abaixo para começar usando nosso construtor.
-                    </CardDescription>
-                    <Button onClick={() => router.push("/sites/new")}>
-                        <Plus className="mr-2 h-4 w-4" /> Criar Meu Primeiro Site
-                    </Button>
-                </Card>
-            ) : (
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                    {sites.map((site) => (
-                        <Card key={site.id} className="flex flex-col overflow-hidden transition-all hover:shadow-md">
-                            <div className="h-32 bg-muted flex items-center justify-center border-b relative">
-                                {site.preview_image ? (
-                                    <img src={site.preview_image} alt={site.name} className="object-cover w-full h-full" />
-                                ) : (
-                                    <Globe className="h-10 w-10 text-muted-foreground/30" />
-                                )}
-                                <div className="absolute top-2 right-2">
-                                    {site.is_published ? (
-                                        <Badge className="bg-green-500 hover:bg-green-600">Publicado</Badge>
+                ) : sites.length === 0 ? (
+                    <Card className="flex flex-col items-center justify-center py-12">
+                        <div className="rounded-full bg-primary/10 p-4 mb-4">
+                            <Globe className="h-8 w-8 text-primary" />
+                        </div>
+                        <CardTitle className="mb-2">Nenhum site ainda</CardTitle>
+                        <CardDescription className="mb-6 text-center max-w-sm">
+                            Você ainda não criou nenhum site ou landing page. Clique no botão abaixo para começar usando nosso construtor.
+                        </CardDescription>
+                        <Button onClick={() => router.push("/sites/new")}>
+                            <Plus className="mr-2 h-4 w-4" /> Criar Meu Primeiro Site
+                        </Button>
+                    </Card>
+                ) : (
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                        {sites.map((site) => (
+                            <Card key={site.id} className="flex flex-col overflow-hidden transition-all hover:shadow-md">
+                                <div className="h-32 bg-muted flex items-center justify-center border-b relative">
+                                    {site.preview_image ? (
+                                        <img src={site.preview_image} alt={site.name} className="object-cover w-full h-full" />
                                     ) : (
-                                        <Badge variant="secondary">Rascunho</Badge>
+                                        <Globe className="h-10 w-10 text-muted-foreground/30" />
                                     )}
+                                    <div className="absolute top-2 right-2">
+                                        {site.is_published ? (
+                                            <Badge className="bg-green-500 hover:bg-green-600">Publicado</Badge>
+                                        ) : (
+                                            <Badge variant="secondary">Rascunho</Badge>
+                                        )}
+                                    </div>
                                 </div>
-                            </div>
-                            <CardHeader className="pb-2">
-                                <CardTitle className="text-xl truncate">{site.name}</CardTitle>
-                                <CardDescription className="truncate text-xs">
-                                    / {site.slug}
-                                </CardDescription>
-                            </CardHeader>
-                            <CardFooter className="flex justify-between border-t p-4 mt-auto">
-                                <Button variant="outline" size="sm" onClick={() => router.push(`/sites/${site.id}`)}>
-                                    <Edit className="mr-2 h-3.5 w-3.5" /> Editar Site
-                                </Button>
-                                <div className="space-x-2">
-                                    {site.is_published && (
-                                        <Button variant="ghost" size="icon" title="Acessar">
-                                            <ExternalLink className="h-4 w-4 text-muted-foreground" />
-                                        </Button>
-                                    )}
-                                    <Button variant="ghost" size="icon" onClick={() => handleDelete(site.id, site.name)} title="Excluir">
-                                        <Trash2 className="h-4 w-4 text-destructive" />
+                                <CardHeader className="pb-2">
+                                    <CardTitle className="text-xl truncate">{site.name}</CardTitle>
+                                    <CardDescription className="truncate text-xs">
+                                        / {site.slug}
+                                    </CardDescription>
+                                </CardHeader>
+                                <CardFooter className="flex justify-between border-t p-4 mt-auto">
+                                    <Button variant="outline" size="sm" onClick={() => router.push(`/sites/${site.id}`)}>
+                                        <Edit className="mr-2 h-3.5 w-3.5" /> Editar Site
                                     </Button>
-                                </div>
-                            </CardFooter>
-                        </Card>
-                    ))}
-                </div>
-            )}
-        </div>
+                                    <div className="space-x-2">
+                                        {site.is_published && (
+                                            <Button variant="ghost" size="icon" title="Acessar">
+                                                <ExternalLink className="h-4 w-4 text-muted-foreground" />
+                                            </Button>
+                                        )}
+                                        <Button variant="ghost" size="icon" onClick={() => handleDelete(site.id, site.name)} title="Excluir">
+                                            <Trash2 className="h-4 w-4 text-destructive" />
+                                        </Button>
+                                    </div>
+                                </CardFooter>
+                            </Card>
+                        ))}
+                    </div>
+                )
+            }
+        </div >
     )
 }
