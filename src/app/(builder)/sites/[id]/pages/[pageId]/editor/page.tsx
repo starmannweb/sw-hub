@@ -18,8 +18,9 @@ import {
 
 const gjsOptions = {
     height: '100%',
-    storageManager: false, // Save to Supabase manually later
-    panels: { defaults: [] }, // We use our custom panels!
+    storageManager: false,
+    panels: { defaults: [] },
+    components: '',
     blockManager: {
         blocks: [
             { id: 'section', label: 'Container', category: 'Layout', content: '<section style="padding: 4rem 2rem; background-color: #f1f1f1; min-height: 200px; display: flex; flex-direction: column;"></section>' },
@@ -43,7 +44,7 @@ export default function SiteEditorPage() {
     const editorRef = useRef<any>(null)
 
     const [viewport, setViewport] = useState<'desktop' | 'tablet' | 'mobile'>('desktop')
-    const [leftPanelMode, setLeftPanelMode] = useState<'elements' | 'layers'>('layers')
+    const [leftPanelMode, setLeftPanelMode] = useState<'elements' | 'layers'>('elements')
     const [selectedElement, setSelectedElement] = useState<'section' | 'headline' | 'vsl'>('section')
     const [loading, setLoading] = useState(true)
     const [saving, setSaving] = useState(false)
