@@ -120,7 +120,7 @@ export default function ReplicatePage() {
             localStorage.setItem('site_clone_data', JSON.stringify({ html: htmlContent, css: cssContent, pageId: data.id }))
 
             // Redirect to editor
-            router.push(`/sites-beta?slug=${finalSlug}&site=${selectedSiteId}`)
+            router.push(`/sites/${selectedSiteId}/pages/${data.id}/editor`)
 
         } catch (err: any) {
             setError(err.message || 'Erro durante a replicação.')
@@ -139,11 +139,11 @@ export default function ReplicatePage() {
                     <ArrowLeft className="w-4 h-4 mr-2" /> Voltar
                 </button>
 
-                <div className="flex items-center justify-between relative">
+                <div className="flex items-center justify-between relative px-4">
                     {/* Line behind steps */}
-                    <div className="absolute top-1/2 left-0 right-0 h-[2px] bg-[#232329] -z-10 -translate-y-1/2 rounded-full"></div>
-                    <div className="absolute top-1/2 left-0 h-[2px] bg-[#8b5cf6] -z-10 -translate-y-1/2 transition-all duration-500 rounded-full"
-                        style={{ width: `${((step - 1) / 3) * 100}%` }}></div>
+                    <div className="absolute top-[16px] left-[10%] right-[10%] h-[2px] bg-[#292932] -z-10 rounded-full"></div>
+                    <div className="absolute top-[16px] left-[10%] h-[2px] bg-[#8b5cf6] -z-10 transition-all duration-500 rounded-full"
+                        style={{ width: `${((step - 1) / 3) * 80}%` }}></div>
 
                     {[
                         { id: 1, label: 'Selecionar' },
@@ -152,11 +152,11 @@ export default function ReplicatePage() {
                         { id: 4, label: 'Personalizar' },
                     ].map((s) => (
                         <div key={s.id} className="flex flex-col items-center gap-3">
-                            <div className={`w-8 h-8 rounded-full flex items-center justify-center font-semibold text-sm transition-all shadow-lg
-                                ${step >= s.id ? 'bg-[#8b5cf6] text-white' : 'bg-[#1c1c22] border-2 border-[#232329] text-[#71717a]'}`}>
+                            <div className={`w-[34px] h-[34px] rounded-full flex items-center justify-center font-medium text-[15px] transition-all
+                                ${step >= s.id ? 'bg-[#8b5cf6] text-white shadow-[0_0_15px_rgba(139,92,246,0.2)]' : 'bg-[#0b0b10] border border-[#292932] text-[#71717a]'}`}>
                                 {s.id}
                             </div>
-                            <span className={`text-[11px] uppercase tracking-wider font-bold ${step >= s.id ? 'text-[#8b5cf6]' : 'text-[#71717a]'}`}>
+                            <span className={`text-[13px] font-semibold tracking-wide ${step >= s.id ? 'text-white' : 'text-[#52525b]'}`}>
                                 {s.label}
                             </span>
                         </div>

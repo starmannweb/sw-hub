@@ -79,7 +79,7 @@ export default function RegistroPage() {
                     </div>
                     <CardTitle className="text-2xl font-bold">Criar conta</CardTitle>
                     <CardDescription>
-                        Preencha os dados para criar sua conta no Hub
+                        Preencha os dados para criar sua conta no SWHub
                     </CardDescription>
                 </CardHeader>
                 <form onSubmit={handleRegister}>

@@ -9,7 +9,7 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  title: "Hub — CRM & Sites",
+  title: "SWHub — CRM & Sites",
   description: "Plataforma completa de CRM e criação de sites",
 };
 

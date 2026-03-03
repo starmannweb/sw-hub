@@ -56,7 +56,7 @@ const navGroups = [
         title: "Marketing & Parceiros",
         items: [
             { title: "Construtor de Sites", href: "/sites", icon: Globe },
-            { title: "Sites (Beta)", href: "/sites-beta", icon: LayoutTemplate },
+            { title: "Builder Clássico", href: "/sites-beta", icon: LayoutTemplate },
             { title: "Programa de Indicações", href: "/afiliados", icon: Megaphone },
             { title: "Automações", href: "/automacoes", icon: Zap },
         ]
@@ -87,7 +87,7 @@ export function Sidebar() {
                     <div className="flex shrink-0 h-8 w-8 items-center justify-center rounded-lg bg-primary">
                         <span className="text-sm font-bold text-primary-foreground">H</span>
                     </div>
-                    <span className="text-lg font-semibold whitespace-nowrap">Hub</span>
+                    <span className="text-lg font-semibold whitespace-nowrap">SWHub</span>
                 </div>
                 <button
                     onClick={() => setIsCollapsed(!isCollapsed)}
@@ -143,7 +143,7 @@ export function Sidebar() {
             <div className="border-t p-4 shrink-0 mt-auto sticky bottom-0 bg-card overflow-hidden">
                 {!isCollapsed ? (
                     <p className="text-xs text-muted-foreground text-center whitespace-nowrap">
-                        Hub v0.3.0
+                        SWHub v0.3.0
                     </p>
                 ) : (
                     <div className="w-full flex justify-center">

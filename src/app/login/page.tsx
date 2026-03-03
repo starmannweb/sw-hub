@@ -45,7 +45,7 @@ export default function LoginPage() {
                     <div className="mx-auto mb-4 flex h-12 w-12 items-center justify-center rounded-xl bg-primary">
                         <span className="text-xl font-bold text-primary-foreground">H</span>
                     </div>
-                    <CardTitle className="text-2xl font-bold">Entrar no Hub</CardTitle>
+                    <CardTitle className="text-2xl font-bold">Entrar no SWHub</CardTitle>
                     <CardDescription>
                         Digite suas credenciais para acessar o sistema
                     </CardDescription>

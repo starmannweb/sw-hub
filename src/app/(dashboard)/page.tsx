@@ -45,7 +45,7 @@ export default async function DashboardPage() {
             <Card className="bg-gradient-to-r from-primary/10 via-primary/5 to-transparent border-primary/20">
                 <CardHeader>
                     <CardTitle className="text-2xl">
-                        Bem-vindo ao Hub, {firstName}! 🚀
+                        Bem-vindo ao SWHub, {firstName}! 🚀
                     </CardTitle>
                     <CardDescription className="text-base">
                         Aqui está um resumo do seu sistema. Comece explorando os módulos na barra lateral.
