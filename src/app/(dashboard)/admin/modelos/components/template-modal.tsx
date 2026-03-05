@@ -15,6 +15,7 @@ import { Label } from "@/components/ui/label"
 import { Button } from "@/components/ui/button"
 import { Textarea } from "@/components/ui/textarea"
 import { Checkbox } from "@/components/ui/checkbox"
+import { Upload } from "lucide-react"
 
 
 interface SiteTemplate {
@@ -181,6 +182,42 @@ export function TemplateModal({ isOpen, onClose, onSaved, template }: TemplateMo
 
                     <div className="space-y-2 flex-1 flex flex-col">
                         <Label htmlFor="jsonContent">Conteúdo JSON (GrapesJS) *</Label>
+                        <div className="flex items-center gap-2 mb-1">
+                            <label
+                                htmlFor="jsonFile"
+                                className="inline-flex items-center gap-2 px-3 py-1.5 rounded-md bg-muted border border-border text-xs font-medium cursor-pointer hover:bg-accent transition-colors"
+                            >
+                                <Upload className="h-3.5 w-3.5" />
+                                Importar arquivo .json
+                            </label>
+                            <input
+                                id="jsonFile"
+                                type="file"
+                                accept=".json,application/json"
+                                className="hidden"
+                                onChange={(e) => {
+                                    const file = e.target.files?.[0]
+                                    if (!file) return
+                                    const reader = new FileReader()
+                                    reader.onload = (ev) => {
+                                        const text = ev.target?.result as string
+                                        try {
+                                            JSON.parse(text)
+                                            setJsonContent(text)
+                                        } catch {
+                                            alert("O arquivo selecionado não contém JSON válido.")
+                                        }
+                                    }
+                                    reader.readAsText(file)
+                                    e.target.value = ""
+                                }}
+                            />
+                            {jsonContent && (
+                                <span className="text-[10px] text-muted-foreground">
+                                    {(jsonContent.length / 1024).toFixed(1)} KB carregado
+                                </span>
+                            )}
+                        </div>
                         <Textarea
                             id="jsonContent"
                             className="flex-1 font-mono text-xs whitespace-pre"

@@ -24,6 +24,8 @@ import {
     MessageCircle,
     LayoutTemplate,
     Headset,
+    Download,
+    ShieldCheck,
     type LucideIcon,
 } from "lucide-react"
 
@@ -104,9 +106,22 @@ const navigation: NavSection[] = [
         href: "/relatorios",
     },
     {
+        title: "Materiais",
+        icon: Download,
+        href: "/materiais",
+    },
+    {
         title: "Suporte",
         icon: Headset,
         href: "/suporte",
+    },
+    {
+        title: "Admin",
+        icon: ShieldCheck,
+        items: [
+            { title: "Modelos de Sites", href: "/admin/modelos", icon: LayoutTemplate },
+            { title: "Materiais de Apoio", href: "/admin/materiais", icon: Download },
+        ],
     },
     {
         title: "Configurações",
