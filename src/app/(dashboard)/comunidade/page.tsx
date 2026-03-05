@@ -8,7 +8,7 @@ export default function ComunidadePage() {
                     <MessageCircle className="h-6 w-6" />
                 </div>
                 <div>
-                    <h1 className="text-2xl font-bold text-white">Comunidade Discord</h1>
+                    <h1 className="text-2xl font-bold text-white">Comunidade</h1>
                     <p className="text-sm text-gray-500">Conecte-se com outros membros da comunidade</p>
                 </div>
             </div>

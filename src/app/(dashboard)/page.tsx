@@ -10,23 +10,22 @@ import {
     Megaphone,
     KanbanSquare,
     Briefcase,
-    CheckSquare,
     GraduationCap,
     MessageCircle,
 } from "lucide-react"
 
-const modules = [
+const features = [
     {
-        title: "CRM",
-        description: "Gestão de Leads e Clientes",
+        title: "Leads",
+        description: "Captura e gestão de contatos",
         href: "/crm/contatos",
         icon: Users,
         color: "from-emerald-600 to-emerald-800",
         iconBg: "bg-emerald-500/20 text-emerald-400",
     },
     {
-        title: "Negócios",
-        description: "Pipeline de vendas e oportunidades",
+        title: "CRM",
+        description: "Vendas, negócios e propostas",
         href: "/crm/negocios",
         icon: KanbanSquare,
         color: "from-blue-600 to-blue-800",
@@ -41,22 +40,6 @@ const modules = [
         iconBg: "bg-violet-500/20 text-violet-400",
     },
     {
-        title: "Tarefas",
-        description: "Gestão de tarefas do time",
-        href: "/colaboracao/tarefas",
-        icon: CheckSquare,
-        color: "from-cyan-600 to-cyan-800",
-        iconBg: "bg-cyan-500/20 text-cyan-400",
-    },
-    {
-        title: "Propostas",
-        description: "Crie e envie propostas comerciais",
-        href: "/financeiro/propostas",
-        icon: FileText,
-        color: "from-amber-600 to-amber-800",
-        iconBg: "bg-amber-500/20 text-amber-400",
-    },
-    {
         title: "Construtor de Sites",
         description: "Crie landing pages e sites",
         href: "/sites",
@@ -66,7 +49,7 @@ const modules = [
     },
     {
         title: "Automações",
-        description: "Fluxos automáticos e workflows",
+        description: "Fluxos automáticos e agentes de IA",
         href: "/automacoes",
         icon: Zap,
         color: "from-yellow-600 to-yellow-800",
@@ -74,7 +57,7 @@ const modules = [
     },
     {
         title: "Indicações",
-        description: "Programa de indicações e afiliados",
+        description: "Receba indicações de parceiros",
         href: "/afiliados",
         icon: Megaphone,
         color: "from-pink-600 to-pink-800",
@@ -98,7 +81,7 @@ const modules = [
     },
     {
         title: "Comunidade",
-        description: "Acesse o Discord da comunidade",
+        description: "Conecte-se com outros membros",
         href: "/comunidade",
         icon: MessageCircle,
         color: "from-indigo-600 to-indigo-800",
@@ -164,11 +147,11 @@ export default async function DashboardPage() {
 
             {/* Modules Grid */}
             <div>
-                <h2 className="text-lg font-semibold text-white mb-1">Todos os módulos</h2>
-                <p className="text-sm text-gray-500 mb-5">Acesse as funcionalidades integradas do sistema</p>
+                <h2 className="text-lg font-semibold text-white mb-1">Funcionalidades</h2>
+                <p className="text-sm text-gray-500 mb-5">Acesse os serviços integrados do seu Hub</p>
 
                 <div className="grid gap-4 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-                    {modules.map((mod) => (
+                    {features.map((mod) => (
                         <Link
                             key={mod.title}
                             href={mod.href}

@@ -22,6 +22,8 @@ import {
     ChevronDown,
     GraduationCap,
     MessageCircle,
+    LayoutTemplate,
+    Headset,
     type LucideIcon,
 } from "lucide-react"
 
@@ -45,26 +47,31 @@ const navigation: NavSection[] = [
         href: "/",
     },
     {
-        title: "CRM",
+        title: "Leads",
         icon: Users,
+        href: "/crm/contatos",
+    },
+    {
+        title: "CRM",
+        icon: KanbanSquare,
         items: [
-            { title: "Gestão de Leads", href: "/crm/contatos", icon: Users },
             { title: "Negócios", href: "/crm/negocios", icon: KanbanSquare },
-            { title: "Gestão de Projetos", href: "/colaboracao/projetos", icon: Briefcase },
+            { title: "Propostas", href: "/financeiro/propostas", icon: FileText },
             { title: "Gestão de Tarefas", href: "/colaboracao/tarefas", icon: CheckSquare },
-            { title: "Treinamentos", href: "/treinamentos", icon: GraduationCap },
-            { title: "Comunidade Discord", href: "/comunidade", icon: MessageCircle },
         ],
     },
     {
-        title: "Propostas",
-        icon: FileText,
-        href: "/financeiro/propostas",
+        title: "Projetos",
+        icon: Briefcase,
+        href: "/colaboracao/projetos",
     },
     {
         title: "Construtor de Sites",
         icon: Globe,
-        href: "/sites",
+        items: [
+            { title: "Editor Moderno", href: "/sites", icon: Globe },
+            { title: "Editor Clássico", href: "/sites-beta", icon: LayoutTemplate },
+        ],
     },
     {
         title: "Automações",
@@ -77,6 +84,16 @@ const navigation: NavSection[] = [
         href: "/afiliados",
     },
     {
+        title: "Treinamentos",
+        icon: GraduationCap,
+        href: "/treinamentos",
+    },
+    {
+        title: "Comunidade",
+        icon: MessageCircle,
+        href: "/comunidade",
+    },
+    {
         title: "Financeiro",
         icon: CreditCard,
         href: "/financeiro/faturas",
@@ -85,6 +102,11 @@ const navigation: NavSection[] = [
         title: "Relatórios",
         icon: BarChart3,
         href: "/relatorios",
+    },
+    {
+        title: "Suporte",
+        icon: Headset,
+        href: "/suporte",
     },
     {
         title: "Configurações",
