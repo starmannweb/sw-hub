@@ -46,6 +46,7 @@ export interface CustomField {
 
 export type CrmContactType = 'lead' | 'client';
 export type CrmLeadScore = 'cold' | 'warm' | 'hot' | null;
+export type CrmLeadSource = 'ads' | 'indicacao' | 'organico' | 'whatsapp' | 'site' | 'outro' | null;
 
 export interface CrmContact {
     id: string;
@@ -57,6 +58,7 @@ export interface CrmContact {
     company: string | null;
     job_title: string | null;
     lead_score: CrmLeadScore;
+    source: CrmLeadSource;
     tags: string[] | null;
     notes: string | null;
     created_at: string;
@@ -91,10 +93,11 @@ export interface CrmDeal {
     contact_id: string | null;
     pipeline_id: string;
     stage_id: string;
-    promoter_id?: string | null; // Integrado com o programa FBN Indica
+    promoter_id?: string | null;
     title: string;
     value: number;
     status: CrmDealStatus;
+    source: CrmLeadSource;
     expected_close_date: string | null;
     created_at: string;
     updated_at: string;
