@@ -8,11 +8,9 @@ import {
     LayoutDashboard,
     Users,
     Globe,
-    MessageSquare,
     BarChart3,
     Settings,
     Zap,
-    LayoutTemplate,
     KanbanSquare,
     Briefcase,
     CheckSquare,
@@ -20,78 +18,122 @@ import {
     CreditCard,
     Megaphone,
     PanelLeftClose,
-    PanelLeftOpen
+    PanelLeftOpen,
+    ChevronDown,
+    GraduationCap,
+    MessageCircle,
+    type LucideIcon,
 } from "lucide-react"
 
-const navGroups = [
+interface NavItem {
+    title: string
+    href: string
+    icon: LucideIcon
+}
+
+interface NavSection {
+    title: string
+    icon: LucideIcon
+    href?: string
+    items?: NavItem[]
+}
+
+const navigation: NavSection[] = [
     {
-        title: "Principal",
-        items: [
-            { title: "Dashboard", href: "/", icon: LayoutDashboard },
-            { title: "Conversas", href: "/conversas", icon: MessageSquare },
-        ]
+        title: "Início",
+        icon: LayoutDashboard,
+        href: "/",
     },
     {
         title: "CRM",
+        icon: Users,
         items: [
-            { title: "Leads e Clientes", href: "/crm/contatos", icon: Users },
+            { title: "Gestão de Leads", href: "/crm/contatos", icon: Users },
             { title: "Negócios", href: "/crm/negocios", icon: KanbanSquare },
-        ]
+            { title: "Gestão de Projetos", href: "/colaboracao/projetos", icon: Briefcase },
+            { title: "Gestão de Tarefas", href: "/colaboracao/tarefas", icon: CheckSquare },
+            { title: "Treinamentos", href: "/treinamentos", icon: GraduationCap },
+            { title: "Comunidade Discord", href: "/comunidade", icon: MessageCircle },
+        ],
     },
     {
-        title: "Colaboração",
-        items: [
-            { title: "Projetos", href: "/colaboracao/projetos", icon: Briefcase },
-            { title: "Tarefas", href: "/colaboracao/tarefas", icon: CheckSquare },
-        ]
+        title: "Propostas",
+        icon: FileText,
+        href: "/financeiro/propostas",
+    },
+    {
+        title: "Construtor de Sites",
+        icon: Globe,
+        href: "/sites",
+    },
+    {
+        title: "Automações",
+        icon: Zap,
+        href: "/automacoes",
+    },
+    {
+        title: "Indicações",
+        icon: Megaphone,
+        href: "/afiliados",
     },
     {
         title: "Financeiro",
-        items: [
-            { title: "Propostas", href: "/financeiro/propostas", icon: FileText },
-            { title: "Faturas", href: "/financeiro/faturas", icon: CreditCard },
-        ]
+        icon: CreditCard,
+        href: "/financeiro/faturas",
     },
     {
-        title: "Marketing & Parceiros",
-        items: [
-            { title: "Construtor de Sites", href: "/sites", icon: Globe },
-            { title: "Builder Clássico", href: "/sites-beta", icon: LayoutTemplate },
-            { title: "Programa de Indicações", href: "/afiliados", icon: Megaphone },
-            { title: "Automações", href: "/automacoes", icon: Zap },
-        ]
+        title: "Relatórios",
+        icon: BarChart3,
+        href: "/relatorios",
     },
     {
-        title: "Outros",
-        items: [
-            { title: "Relatórios", href: "/relatorios", icon: BarChart3 },
-            { title: "Configurações", href: "/configuracoes", icon: Settings },
-            { title: "Modelos (Admin)", href: "/admin/modelos", icon: LayoutTemplate },
-        ]
-    }
+        title: "Configurações",
+        icon: Settings,
+        href: "/configuracoes",
+    },
 ]
 
 export function Sidebar() {
     const pathname = usePathname()
-    // Start expanded by default, or you can manage this via context/localstorage later
     const [isCollapsed, setIsCollapsed] = useState(false)
+    const [expandedSections, setExpandedSections] = useState<string[]>(["CRM"])
+
+    const toggleSection = (title: string) => {
+        setExpandedSections((prev) =>
+            prev.includes(title) ? prev.filter((t) => t !== title) : [...prev, title]
+        )
+    }
+
+    const isItemActive = (href: string) =>
+        pathname === href || (href !== "/" && pathname.startsWith(href))
+
+    const isSectionActive = (section: NavSection) => {
+        if (section.href) return isItemActive(section.href)
+        return section.items?.some((item) => isItemActive(item.href)) ?? false
+    }
 
     return (
         <aside className={cn(
-            "hidden md:flex h-screen flex-col border-r bg-card overflow-y-auto transition-all duration-300 ease-in-out z-40",
+            "hidden md:flex h-screen flex-col bg-[#1a1a1a] overflow-y-auto transition-all duration-300 ease-in-out z-40 border-r border-white/5",
             isCollapsed ? "w-[72px]" : "w-64"
         )}>
-            {/* Logo & Toggle */}
-            <div className="flex h-16 shrink-0 items-center justify-between border-b px-4 sticky top-0 bg-card z-10">
-                <div className={cn("flex items-center gap-2 overflow-hidden", isCollapsed && "w-0 opacity-0")}>
-                    <div className="flex shrink-0 h-8 w-8 items-center justify-center rounded-lg bg-primary">
-                        <span className="text-sm font-bold text-primary-foreground">H</span>
+            {/* Header - User Greeting & Toggle */}
+            <div className="flex shrink-0 items-center justify-between px-4 py-5 sticky top-0 bg-[#1a1a1a] z-10">
+                <div className={cn("flex items-center gap-3 overflow-hidden", isCollapsed && "w-0 opacity-0")}>
+                    <div className="flex shrink-0 h-9 w-9 items-center justify-center rounded-full bg-emerald-600">
+                        <span className="text-sm font-bold text-white">H</span>
                     </div>
-                    <span className="text-lg font-semibold whitespace-nowrap">SWHub</span>
+                    <div className="min-w-0">
+                        <p className="text-[11px] uppercase tracking-widest text-gray-500 font-medium">Olá</p>
+                        <p className="text-sm font-semibold text-white truncate">SWHub</p>
+                    </div>
                 </div>
                 <button
                     onClick={() => setIsCollapsed(!isCollapsed)}
-                    className={cn("p-1.5 rounded-md hover:bg-accent text-muted-foreground hover:text-accent-foreground transition-colors shrink-0", isCollapsed && "mx-auto")}
+                    className={cn(
+                        "p-1.5 rounded-md hover:bg-white/10 text-gray-400 hover:text-white transition-colors shrink-0",
+                        isCollapsed && "mx-auto"
+                    )}
                     title={isCollapsed ? "Expandir" : "Recolher"}
                 >
                     {isCollapsed ? <PanelLeftOpen className="w-5 h-5" /> : <PanelLeftClose className="w-5 h-5" />}
@@ -99,55 +141,97 @@ export function Sidebar() {
             </div>
 
             {/* Navigation */}
-            <nav className={cn("flex-1 space-y-6 py-6", isCollapsed ? "px-2" : "px-3")}>
-                {navGroups.map((group, groupIdx) => (
-                    <div key={groupIdx}>
-                        {!isCollapsed ? (
-                            <h4 className="mb-2 px-4 text-xs font-semibold uppercase tracking-wider text-muted-foreground/70">
-                                {group.title}
-                            </h4>
-                        ) : (
-                            <div className="h-px bg-border/50 my-4 mx-2"></div>
-                        )}
+            <nav className={cn("flex-1 py-2", isCollapsed ? "px-2" : "px-3")}>
+                <div className="space-y-0.5">
+                    {navigation.map((section) => {
+                        const active = isSectionActive(section)
+                        const isExpanded = expandedSections.includes(section.title)
+                        const hasItems = section.items && section.items.length > 0
 
-                        <div className="space-y-1">
-                            {group.items.map((item) => {
-                                const isActive =
-                                    pathname === item.href ||
-                                    (item.href !== "/" && pathname.startsWith(item.href))
-
-                                return (
-                                    <Link
-                                        key={item.href}
-                                        href={item.href}
-                                        title={isCollapsed ? item.title : undefined}
+                        if (hasItems) {
+                            return (
+                                <div key={section.title}>
+                                    <button
+                                        onClick={() => {
+                                            if (!isCollapsed) toggleSection(section.title)
+                                        }}
+                                        title={isCollapsed ? section.title : undefined}
                                         className={cn(
-                                            "flex items-center rounded-lg transition-colors overflow-hidden",
-                                            isActive
-                                                ? "bg-primary/10 text-primary"
-                                                : "text-muted-foreground hover:bg-accent hover:text-accent-foreground",
-                                            isCollapsed ? "justify-center p-2.5 mx-auto w-10 h-10" : "gap-3 px-3 py-2 w-full text-sm font-medium"
+                                            "flex items-center w-full rounded-lg transition-colors",
+                                            active
+                                                ? "text-emerald-400"
+                                                : "text-gray-400 hover:bg-white/5 hover:text-gray-200",
+                                            isCollapsed ? "justify-center p-2.5 mx-auto w-10 h-10" : "gap-3 px-3 py-2.5 text-sm font-medium"
                                         )}
                                     >
-                                        <item.icon className="h-4 w-4 shrink-0" />
-                                        {!isCollapsed && <span className="whitespace-nowrap">{item.title}</span>}
-                                    </Link>
-                                )
-                            })}
-                        </div>
-                    </div>
-                ))}
+                                        <section.icon className="h-[18px] w-[18px] shrink-0" />
+                                        {!isCollapsed && (
+                                            <>
+                                                <span className="flex-1 text-left whitespace-nowrap">{section.title}</span>
+                                                <ChevronDown className={cn(
+                                                    "h-4 w-4 shrink-0 transition-transform duration-200 text-gray-500",
+                                                    isExpanded && "rotate-180"
+                                                )} />
+                                            </>
+                                        )}
+                                    </button>
+
+                                    {!isCollapsed && isExpanded && (
+                                        <div className="ml-4 mt-0.5 space-y-0.5 border-l border-white/10 pl-3">
+                                            {section.items!.map((item) => {
+                                                const itemActive = isItemActive(item.href)
+                                                return (
+                                                    <Link
+                                                        key={item.href}
+                                                        href={item.href}
+                                                        className={cn(
+                                                            "flex items-center gap-3 rounded-lg px-3 py-2 text-[13px] font-medium transition-colors",
+                                                            itemActive
+                                                                ? "text-emerald-400 bg-emerald-500/10"
+                                                                : "text-gray-500 hover:text-gray-300 hover:bg-white/5"
+                                                        )}
+                                                    >
+                                                        <item.icon className="h-4 w-4 shrink-0" />
+                                                        <span className="whitespace-nowrap">{item.title}</span>
+                                                    </Link>
+                                                )
+                                            })}
+                                        </div>
+                                    )}
+                                </div>
+                            )
+                        }
+
+                        return (
+                            <Link
+                                key={section.title}
+                                href={section.href!}
+                                title={isCollapsed ? section.title : undefined}
+                                className={cn(
+                                    "flex items-center rounded-lg transition-colors",
+                                    active
+                                        ? "text-emerald-400 bg-emerald-500/10"
+                                        : "text-gray-400 hover:bg-white/5 hover:text-gray-200",
+                                    isCollapsed ? "justify-center p-2.5 mx-auto w-10 h-10" : "gap-3 px-3 py-2.5 text-sm font-medium"
+                                )}
+                            >
+                                <section.icon className="h-[18px] w-[18px] shrink-0" />
+                                {!isCollapsed && <span className="whitespace-nowrap">{section.title}</span>}
+                            </Link>
+                        )
+                    })}
+                </div>
             </nav>
 
             {/* Footer */}
-            <div className="border-t p-4 shrink-0 mt-auto sticky bottom-0 bg-card overflow-hidden">
+            <div className="border-t border-white/5 p-4 shrink-0 mt-auto sticky bottom-0 bg-[#1a1a1a] overflow-hidden">
                 {!isCollapsed ? (
-                    <p className="text-xs text-muted-foreground text-center whitespace-nowrap">
-                        SWHub v0.3.0
+                    <p className="text-[11px] text-gray-600 text-center whitespace-nowrap">
+                        SWHub v0.4.0
                     </p>
                 ) : (
                     <div className="w-full flex justify-center">
-                        <div className="w-2 h-2 rounded-full bg-primary/50"></div>
+                        <div className="w-2 h-2 rounded-full bg-emerald-500/50"></div>
                     </div>
                 )}
             </div>

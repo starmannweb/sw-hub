@@ -42,7 +42,7 @@ export function Header({ userEmail, userName }: HeaderProps) {
             : "U"
 
     return (
-        <header className="flex h-16 items-center justify-between border-b bg-card px-6">
+        <header className="flex h-16 items-center justify-between border-b border-white/5 bg-[#161616] px-6">
             <div>
                 <h2 className="text-lg font-semibold">
                     Olá{userName ? `, ${userName.split(" ")[0]}` : ""} 👋

@@ -1,6 +1,125 @@
 import { createClient } from "@/lib/supabase/server"
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { Users, Globe, MessageSquare, BarChart3 } from "lucide-react"
+import Link from "next/link"
+import {
+    Users,
+    Globe,
+    BarChart3,
+    Zap,
+    FileText,
+    CreditCard,
+    Megaphone,
+    KanbanSquare,
+    Briefcase,
+    CheckSquare,
+    GraduationCap,
+    MessageCircle,
+} from "lucide-react"
+
+const modules = [
+    {
+        title: "CRM",
+        description: "Gestão de Leads e Clientes",
+        href: "/crm/contatos",
+        icon: Users,
+        color: "from-emerald-600 to-emerald-800",
+        iconBg: "bg-emerald-500/20 text-emerald-400",
+    },
+    {
+        title: "Negócios",
+        description: "Pipeline de vendas e oportunidades",
+        href: "/crm/negocios",
+        icon: KanbanSquare,
+        color: "from-blue-600 to-blue-800",
+        iconBg: "bg-blue-500/20 text-blue-400",
+    },
+    {
+        title: "Projetos",
+        description: "Gestão de projetos e entregas",
+        href: "/colaboracao/projetos",
+        icon: Briefcase,
+        color: "from-violet-600 to-violet-800",
+        iconBg: "bg-violet-500/20 text-violet-400",
+    },
+    {
+        title: "Tarefas",
+        description: "Gestão de tarefas do time",
+        href: "/colaboracao/tarefas",
+        icon: CheckSquare,
+        color: "from-cyan-600 to-cyan-800",
+        iconBg: "bg-cyan-500/20 text-cyan-400",
+    },
+    {
+        title: "Propostas",
+        description: "Crie e envie propostas comerciais",
+        href: "/financeiro/propostas",
+        icon: FileText,
+        color: "from-amber-600 to-amber-800",
+        iconBg: "bg-amber-500/20 text-amber-400",
+    },
+    {
+        title: "Construtor de Sites",
+        description: "Crie landing pages e sites",
+        href: "/sites",
+        icon: Globe,
+        color: "from-green-600 to-green-800",
+        iconBg: "bg-green-500/20 text-green-400",
+    },
+    {
+        title: "Automações",
+        description: "Fluxos automáticos e workflows",
+        href: "/automacoes",
+        icon: Zap,
+        color: "from-yellow-600 to-yellow-800",
+        iconBg: "bg-yellow-500/20 text-yellow-400",
+    },
+    {
+        title: "Indicações",
+        description: "Programa de indicações e afiliados",
+        href: "/afiliados",
+        icon: Megaphone,
+        color: "from-pink-600 to-pink-800",
+        iconBg: "bg-pink-500/20 text-pink-400",
+    },
+    {
+        title: "Financeiro",
+        description: "Faturamento e cobranças",
+        href: "/financeiro/faturas",
+        icon: CreditCard,
+        color: "from-teal-600 to-teal-800",
+        iconBg: "bg-teal-500/20 text-teal-400",
+    },
+    {
+        title: "Treinamentos",
+        description: "Cursos e materiais de apoio",
+        href: "/treinamentos",
+        icon: GraduationCap,
+        color: "from-orange-600 to-orange-800",
+        iconBg: "bg-orange-500/20 text-orange-400",
+    },
+    {
+        title: "Comunidade",
+        description: "Acesse o Discord da comunidade",
+        href: "/comunidade",
+        icon: MessageCircle,
+        color: "from-indigo-600 to-indigo-800",
+        iconBg: "bg-indigo-500/20 text-indigo-400",
+    },
+    {
+        title: "Relatórios",
+        description: "Análises e métricas do sistema",
+        href: "/relatorios",
+        icon: BarChart3,
+        color: "from-rose-600 to-rose-800",
+        iconBg: "bg-rose-500/20 text-rose-400",
+    },
+]
+
+const stats = [
+    { title: "LEADS ATIVOS", value: "0", icon: Users, iconBg: "bg-emerald-500/20 text-emerald-400" },
+    { title: "PROJETOS EM ANDAMENTO", value: "0", icon: Briefcase, iconBg: "bg-violet-500/20 text-violet-400" },
+    { title: "PROPOSTAS ENVIADAS", value: "0", icon: FileText, iconBg: "bg-amber-500/20 text-amber-400" },
+    { title: "SITES PUBLICADOS", value: "0", icon: Globe, iconBg: "bg-green-500/20 text-green-400" },
+]
 
 export default async function DashboardPage() {
     const supabase = await createClient()
@@ -8,100 +127,63 @@ export default async function DashboardPage() {
 
     const firstName = user?.user_metadata?.full_name?.split(" ")[0] || "usuário"
 
-    const stats = [
-        {
-            title: "Contatos",
-            value: "0",
-            description: "Total de contatos",
-            icon: Users,
-            color: "text-blue-500",
-        },
-        {
-            title: "Sites",
-            value: "0",
-            description: "Sites publicados",
-            icon: Globe,
-            color: "text-green-500",
-        },
-        {
-            title: "Conversas",
-            value: "0",
-            description: "Conversas ativas",
-            icon: MessageSquare,
-            color: "text-purple-500",
-        },
-        {
-            title: "Visitas",
-            value: "0",
-            description: "Últimos 30 dias",
-            icon: BarChart3,
-            color: "text-orange-500",
-        },
-    ]
-
     return (
-        <div className="space-y-6">
-            {/* Welcome Banner */}
-            <Card className="bg-gradient-to-r from-primary/10 via-primary/5 to-transparent border-primary/20">
-                <CardHeader>
-                    <CardTitle className="text-2xl">
-                        Bem-vindo ao SWHub, {firstName}! 🚀
-                    </CardTitle>
-                    <CardDescription className="text-base">
-                        Aqui está um resumo do seu sistema. Comece explorando os módulos na barra lateral.
-                    </CardDescription>
-                </CardHeader>
-            </Card>
+        <div className="space-y-8">
+            {/* Hero Banner */}
+            <div className="relative overflow-hidden rounded-2xl bg-gradient-to-br from-emerald-900/80 via-[#1a2e1a] to-[#111] border border-white/5 p-8 md:p-10">
+                <div className="absolute inset-0 bg-[url('/grid.svg')] opacity-10" />
+                <div className="relative z-10">
+                    <h1 className="text-3xl md:text-4xl font-bold text-white mb-2">
+                        Bem-vindo, {firstName}!
+                    </h1>
+                    <p className="text-gray-400 text-base md:text-lg max-w-xl">
+                        Gerencie seus leads, projetos, sites e finanças em um só lugar. Escolha um módulo abaixo para começar.
+                    </p>
+                </div>
+            </div>
 
             {/* Stats Grid */}
-            <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
+            <div className="grid gap-4 grid-cols-2 lg:grid-cols-4">
                 {stats.map((stat) => (
-                    <Card key={stat.title}>
-                        <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                            <CardTitle className="text-sm font-medium text-muted-foreground">
+                    <div
+                        key={stat.title}
+                        className="rounded-xl bg-[#1e1e1e] border border-white/5 p-5 flex items-start justify-between"
+                    >
+                        <div>
+                            <p className="text-[11px] font-semibold uppercase tracking-wider text-gray-500 mb-2">
                                 {stat.title}
-                            </CardTitle>
-                            <stat.icon className={`h-5 w-5 ${stat.color}`} />
-                        </CardHeader>
-                        <CardContent>
-                            <div className="text-3xl font-bold">{stat.value}</div>
-                            <p className="text-xs text-muted-foreground mt-1">
-                                {stat.description}
                             </p>
-                        </CardContent>
-                    </Card>
+                            <p className="text-3xl font-bold text-white">{stat.value}</p>
+                        </div>
+                        <div className={`p-2 rounded-lg ${stat.iconBg}`}>
+                            <stat.icon className="h-5 w-5" />
+                        </div>
+                    </div>
                 ))}
             </div>
 
-            {/* Quick Actions */}
-            <div className="grid gap-4 md:grid-cols-3">
-                <Card className="cursor-pointer transition-shadow hover:shadow-md">
-                    <CardHeader>
-                        <Users className="h-8 w-8 text-blue-500 mb-2" />
-                        <CardTitle className="text-lg">Adicionar Contato</CardTitle>
-                        <CardDescription>
-                            Cadastre um novo lead ou cliente no CRM
-                        </CardDescription>
-                    </CardHeader>
-                </Card>
-                <Card className="cursor-pointer transition-shadow hover:shadow-md">
-                    <CardHeader>
-                        <Globe className="h-8 w-8 text-green-500 mb-2" />
-                        <CardTitle className="text-lg">Criar Site</CardTitle>
-                        <CardDescription>
-                            Use o page builder para criar uma landing page
-                        </CardDescription>
-                    </CardHeader>
-                </Card>
-                <Card className="cursor-pointer transition-shadow hover:shadow-md">
-                    <CardHeader>
-                        <MessageSquare className="h-8 w-8 text-purple-500 mb-2" />
-                        <CardTitle className="text-lg">Iniciar Conversa</CardTitle>
-                        <CardDescription>
-                            Envie uma mensagem para um contato
-                        </CardDescription>
-                    </CardHeader>
-                </Card>
+            {/* Modules Grid */}
+            <div>
+                <h2 className="text-lg font-semibold text-white mb-1">Todos os módulos</h2>
+                <p className="text-sm text-gray-500 mb-5">Acesse as funcionalidades integradas do sistema</p>
+
+                <div className="grid gap-4 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+                    {modules.map((mod) => (
+                        <Link
+                            key={mod.title}
+                            href={mod.href}
+                            className="group rounded-xl bg-[#1e1e1e] border border-white/5 overflow-hidden hover:border-emerald-500/30 transition-all duration-200 hover:shadow-lg hover:shadow-emerald-900/10"
+                        >
+                            <div className={`h-24 bg-gradient-to-br ${mod.color} flex items-center justify-center`}>
+                                <mod.icon className="h-10 w-10 text-white/80 group-hover:scale-110 transition-transform duration-200" />
+                            </div>
+                            <div className="p-4">
+                                <h3 className="text-sm font-semibold text-white mb-1">{mod.title}</h3>
+                                <p className="text-xs text-gray-500 leading-relaxed">{mod.description}</p>
+                            </div>
+                        </Link>
+                    ))}
+                </div>
             </div>
         </div>
     )
