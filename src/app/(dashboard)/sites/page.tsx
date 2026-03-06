@@ -13,7 +13,7 @@ import {
 import { Site } from "@/types/sites"
 
 type CreationMode = "blank" | "template" | "ai"
-type SitesTab = "rascunhos" | "publicados"
+type SitesTab = "rascunhos" | "publicados" | "dominios"
 
 export default function SitesPage() {
     const [sites, setSites] = useState<Site[]>([])
@@ -22,6 +22,10 @@ export default function SitesPage() {
     const [creationMode, setCreationMode] = useState<CreationMode>("blank")
     const [creating, setCreating] = useState(false)
     const [activeTab, setActiveTab] = useState<SitesTab>("rascunhos")
+    const [domains, setDomains] = useState<{id:string;domain:string;site_id:string;status:string}[]>([])
+    const [newDomain, setNewDomain] = useState("")
+    const [selectedSiteForDomain, setSelectedSiteForDomain] = useState("")
+    const [addingDomain, setAddingDomain] = useState(false)
     const router = useRouter()
     const supabase = createClient()
 
@@ -97,7 +101,7 @@ export default function SitesPage() {
                 <h1 className="text-2xl font-bold text-white mb-1">Criar Novo Site</h1>
                 <p className="text-sm text-gray-500 mb-6">Escolha como deseja começar seu novo projeto</p>
 
-                <div className="rounded-xl bg-[#1a1a1a] border border-white/5 p-6 space-y-6">
+                <div className="rounded-xl bg-[#12142a] border border-white/[0.06] p-6 space-y-6">
                     {/* Site Name */}
                     <div>
                         <label className="text-xs font-semibold text-gray-400 mb-2 block">Nome do Site</label>
@@ -105,7 +109,7 @@ export default function SitesPage() {
                             placeholder="Minha Landing Page"
                             value={siteName}
                             onChange={(e) => setSiteName(e.target.value)}
-                            className="bg-[#161616] border-white/10 text-white placeholder:text-gray-600 max-w-md h-12 text-base"
+                            className="bg-[#0d0f1a] border-white/[0.06] text-white placeholder:text-gray-600 max-w-md h-12 text-base"
                         />
                     </div>
 
@@ -121,10 +125,10 @@ export default function SitesPage() {
                                     disabled={isDisabled}
                                     className={`relative text-left p-5 rounded-xl border-2 transition-all ${
                                         isDisabled
-                                            ? "border-white/5 opacity-50 cursor-not-allowed"
+                                            ? "border-white/[0.06] opacity-50 cursor-not-allowed"
                                             : isActive
                                                 ? "border-violet-500 bg-violet-500/5"
-                                                : "border-white/10 bg-[#161616] hover:border-white/20"
+                                                : "border-white/[0.06] bg-[#0d0f1a] hover:border-white/20"
                                     }`}
                                 >
                                     {isActive && (
@@ -166,7 +170,7 @@ export default function SitesPage() {
                 </div>
 
                 {/* Replicator Banner */}
-                <div className="mt-4 rounded-xl bg-[#1a1a1a] border border-white/5 p-5 flex items-center justify-between">
+                <div className="mt-4 rounded-xl bg-[#12142a] border border-white/[0.06] p-5 flex items-center justify-between">
                     <div className="flex items-center gap-3">
                         <Copy className="h-5 w-5 text-gray-500" />
                         <div>
@@ -187,12 +191,12 @@ export default function SitesPage() {
             {/* ── Sites List with Tabs ── */}
             <div>
                 <div className="flex items-center justify-between mb-4">
-                    <div className="flex items-center rounded-lg border border-white/10 bg-[#1e1e1e] p-0.5">
+                    <div className="flex items-center rounded-lg border border-white/10 bg-[#12142a] p-0.5">
                         <button
                             onClick={() => setActiveTab("rascunhos")}
                             className={`flex items-center gap-1.5 px-4 py-2 rounded-md text-xs font-medium transition-colors ${
                                 activeTab === "rascunhos"
-                                    ? "bg-emerald-500/20 text-emerald-400"
+                                    ? "bg-violet-500/20 text-violet-400"
                                     : "text-gray-500 hover:text-gray-300"
                             }`}
                         >
@@ -204,7 +208,7 @@ export default function SitesPage() {
                             onClick={() => setActiveTab("publicados")}
                             className={`flex items-center gap-1.5 px-4 py-2 rounded-md text-xs font-medium transition-colors ${
                                 activeTab === "publicados"
-                                    ? "bg-emerald-500/20 text-emerald-400"
+                                    ? "bg-violet-500/20 text-violet-400"
                                     : "text-gray-500 hover:text-gray-300"
                             }`}
                         >
@@ -212,79 +216,219 @@ export default function SitesPage() {
                             Publicados
                             <span className="ml-1 text-[10px] px-1.5 py-0.5 rounded-full bg-white/5">{publishedSites.length}</span>
                         </button>
+                        <button
+                            onClick={() => setActiveTab("dominios")}
+                            className={`flex items-center gap-1.5 px-4 py-2 rounded-md text-xs font-medium transition-colors ${
+                                activeTab === "dominios"
+                                    ? "bg-violet-500/20 text-violet-400"
+                                    : "text-gray-500 hover:text-gray-300"
+                            }`}
+                        >
+                            <GlobeLock className="h-3.5 w-3.5" />
+                            Domínios
+                        </button>
                     </div>
                 </div>
 
-                {loading ? (
-                    <div className="flex justify-center py-12">
-                        <Loader2 className="h-6 w-6 animate-spin text-gray-500" />
-                    </div>
-                ) : displayedSites.length === 0 ? (
-                    <div className="rounded-xl bg-[#1e1e1e] border border-white/5 p-12 text-center">
-                        <Globe className="h-10 w-10 text-gray-600 mx-auto mb-3" />
-                        <h3 className="text-sm font-semibold text-gray-300 mb-1">
-                            {activeTab === "rascunhos" ? "Nenhum rascunho" : "Nenhum site publicado"}
-                        </h3>
-                        <p className="text-xs text-gray-600">
-                            {activeTab === "rascunhos"
-                                ? "Crie seu primeiro site usando o formulário acima."
-                                : "Publique um site para ele aparecer aqui."
-                            }
-                        </p>
-                    </div>
-                ) : (
-                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-                        {displayedSites.map((site) => (
-                            <div key={site.id} className="rounded-xl bg-[#1a1a1a] border border-white/5 overflow-hidden hover:border-violet-500/20 transition-all group">
-                                <div className="h-32 bg-[#161616] flex items-center justify-center relative overflow-hidden">
-                                    {site.preview_image ? (
-                                        <img src={site.preview_image} alt={site.name} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" />
-                                    ) : (
-                                        <Globe className="h-8 w-8 text-gray-700" />
-                                    )}
-                                    <div className="absolute top-2 right-2">
-                                        {site.is_published ? (
-                                            <Badge className="bg-emerald-500/80 text-white text-[10px]">Publicado</Badge>
-                                        ) : (
-                                            <Badge className="bg-gray-600/80 text-gray-300 text-[10px]">Rascunho</Badge>
-                                        )}
-                                    </div>
-                                </div>
-                                <div className="p-4">
-                                    <h3 className="text-sm font-semibold text-white truncate">{site.name}</h3>
-                                    <p className="text-[11px] text-gray-600 truncate mt-0.5">/{site.slug}</p>
-                                    <div className="flex items-center justify-between mt-3 pt-3 border-t border-white/5">
-                                        <Button
-                                            variant="ghost"
-                                            size="sm"
-                                            className="text-gray-400 hover:text-white hover:bg-white/5 text-xs h-8 px-3"
-                                            onClick={() => router.push(`/sites/${site.id}`)}
-                                        >
-                                            <Edit className="mr-1.5 h-3 w-3" /> Editar
-                                        </Button>
-                                        <div className="flex gap-1">
-                                            {site.is_published && (
-                                                <button className="p-1.5 rounded-md hover:bg-white/5 text-gray-500 hover:text-emerald-400 transition-colors" title="Domínio">
-                                                    <GlobeLock className="h-3.5 w-3.5" />
-                                                </button>
+                {/* Rascunhos / Publicados tabs */}
+                {(activeTab === "rascunhos" || activeTab === "publicados") && (
+                    <>
+                        {loading ? (
+                            <div className="flex justify-center py-12">
+                                <Loader2 className="h-6 w-6 animate-spin text-gray-500" />
+                            </div>
+                        ) : displayedSites.length === 0 ? (
+                            <div className="rounded-xl bg-[#12142a] border border-white/[0.06] p-12 text-center">
+                                <Globe className="h-10 w-10 text-gray-600 mx-auto mb-3" />
+                                <h3 className="text-sm font-semibold text-gray-300 mb-1">
+                                    {activeTab === "rascunhos" ? "Nenhum rascunho" : "Nenhum site publicado"}
+                                </h3>
+                                <p className="text-xs text-gray-600">
+                                    {activeTab === "rascunhos"
+                                        ? "Crie seu primeiro site usando o formulário acima."
+                                        : "Publique um site para ele aparecer aqui."
+                                    }
+                                </p>
+                            </div>
+                        ) : (
+                            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                                {displayedSites.map((site) => (
+                                    <div key={site.id} className="rounded-xl bg-[#12142a] border border-white/[0.06] overflow-hidden hover:border-violet-500/20 transition-all group">
+                                        <div className="h-32 bg-[#0d0f1a] flex items-center justify-center relative overflow-hidden">
+                                            {site.preview_image ? (
+                                                <img src={site.preview_image} alt={site.name} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" />
+                                            ) : (
+                                                <Globe className="h-8 w-8 text-gray-700" />
                                             )}
-                                            {site.is_published && (
-                                                <button className="p-1.5 rounded-md hover:bg-white/5 text-gray-500 hover:text-gray-300 transition-colors" title="Acessar">
-                                                    <ExternalLink className="h-3.5 w-3.5" />
-                                                </button>
-                                            )}
-                                            <button
-                                                onClick={() => handleDelete(site.id, site.name)}
-                                                className="p-1.5 rounded-md hover:bg-red-500/10 text-gray-500 hover:text-red-400 transition-colors"
-                                                title="Excluir"
-                                            >
-                                                <Trash2 className="h-3.5 w-3.5" />
-                                            </button>
+                                            <div className="absolute top-2 right-2">
+                                                {site.is_published ? (
+                                                    <Badge className="bg-violet-500/80 text-white text-[10px]">Publicado</Badge>
+                                                ) : (
+                                                    <Badge className="bg-gray-600/80 text-gray-300 text-[10px]">Rascunho</Badge>
+                                                )}
+                                            </div>
+                                        </div>
+                                        <div className="p-4">
+                                            <h3 className="text-sm font-semibold text-white truncate">{site.name}</h3>
+                                            <p className="text-[11px] text-gray-600 truncate mt-0.5">/{site.slug}</p>
+                                            <div className="flex items-center justify-between mt-3 pt-3 border-t border-white/5">
+                                                <Button
+                                                    variant="ghost"
+                                                    size="sm"
+                                                    className="text-gray-400 hover:text-white hover:bg-white/5 text-xs h-8 px-3"
+                                                    onClick={() => router.push(`/sites/${site.id}`)}
+                                                >
+                                                    <Edit className="mr-1.5 h-3 w-3" /> Editar
+                                                </Button>
+                                                <div className="flex gap-1">
+                                                    {site.is_published && (
+                                                        <button
+                                                            onClick={() => setActiveTab("dominios")}
+                                                            className="p-1.5 rounded-md hover:bg-white/5 text-gray-500 hover:text-violet-400 transition-colors" title="Domínio"
+                                                        >
+                                                            <GlobeLock className="h-3.5 w-3.5" />
+                                                        </button>
+                                                    )}
+                                                    {site.is_published && (
+                                                        <button className="p-1.5 rounded-md hover:bg-white/5 text-gray-500 hover:text-gray-300 transition-colors" title="Acessar">
+                                                            <ExternalLink className="h-3.5 w-3.5" />
+                                                        </button>
+                                                    )}
+                                                    <button
+                                                        onClick={() => handleDelete(site.id, site.name)}
+                                                        className="p-1.5 rounded-md hover:bg-red-500/10 text-gray-500 hover:text-red-400 transition-colors"
+                                                        title="Excluir"
+                                                    >
+                                                        <Trash2 className="h-3.5 w-3.5" />
+                                                    </button>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
+                                ))}
+                            </div>
+                        )}
+                    </>
+                )}
+
+                {/* Domínios Tab */}
+                {activeTab === "dominios" && (
+                    <div className="space-y-6">
+                        {/* Add Domain */}
+                        <div className="rounded-xl bg-[#12142a] border border-white/[0.06] p-6 space-y-4">
+                            <h3 className="text-sm font-bold text-white">Adicionar Domínio</h3>
+                            <div className="flex flex-col sm:flex-row gap-3">
+                                <Input
+                                    placeholder="meusite.com.br"
+                                    value={newDomain}
+                                    onChange={(e) => setNewDomain(e.target.value)}
+                                    className="bg-[#0d0f1a] border-white/[0.06] text-white placeholder:text-gray-600 h-10 flex-1"
+                                />
+                                <select
+                                    value={selectedSiteForDomain}
+                                    onChange={(e) => setSelectedSiteForDomain(e.target.value)}
+                                    className="h-10 rounded-md bg-[#0d0f1a] border border-white/[0.06] text-white text-sm px-3 min-w-[200px]"
+                                >
+                                    <option value="">Selecionar site...</option>
+                                    {publishedSites.map(s => (
+                                        <option key={s.id} value={s.id}>{s.name}</option>
+                                    ))}
+                                </select>
+                                <Button
+                                    onClick={async () => {
+                                        if (!newDomain || !selectedSiteForDomain) return
+                                        setAddingDomain(true)
+                                        const { data: { user } } = await supabase.auth.getUser()
+                                        if (!user) { setAddingDomain(false); return }
+                                        const { data, error } = await supabase
+                                            .from("site_domains")
+                                            .insert({ user_id: user.id, site_id: selectedSiteForDomain, domain: newDomain, status: "pending" })
+                                            .select().single()
+                                        if (!error && data) {
+                                            setDomains([data, ...domains])
+                                            setNewDomain("")
+                                            setSelectedSiteForDomain("")
+                                        }
+                                        setAddingDomain(false)
+                                    }}
+                                    disabled={!newDomain || !selectedSiteForDomain || addingDomain}
+                                    className="bg-violet-600 hover:bg-violet-700 text-white text-sm shrink-0"
+                                >
+                                    {addingDomain ? <Loader2 className="h-4 w-4 animate-spin" /> : "Adicionar"}
+                                </Button>
+                            </div>
+                        </div>
+
+                        {/* DNS Instructions */}
+                        <div className="rounded-xl bg-[#12142a] border border-white/[0.06] p-6 space-y-3">
+                            <h3 className="text-sm font-bold text-white">Configuração DNS</h3>
+                            <p className="text-xs text-gray-400">Adicione o seguinte registro CNAME no painel do seu provedor de domínio:</p>
+                            <div className="rounded-lg bg-[#0d0f1a] border border-white/[0.06] p-4 flex items-center justify-between">
+                                <div className="font-mono text-sm">
+                                    <span className="text-gray-500">Tipo:</span> <span className="text-violet-400">CNAME</span>
+                                    <span className="text-gray-700 mx-3">|</span>
+                                    <span className="text-gray-500">Nome:</span> <span className="text-white">@</span>
+                                    <span className="text-gray-700 mx-3">|</span>
+                                    <span className="text-gray-500">Destino:</span> <span className="text-violet-400">proxy.swhub.com.br</span>
+                                </div>
+                                <button
+                                    onClick={() => navigator.clipboard.writeText("proxy.swhub.com.br")}
+                                    className="text-xs text-gray-500 hover:text-white transition-colors"
+                                >
+                                    <Copy className="h-4 w-4" />
+                                </button>
+                            </div>
+                            <div className="flex items-center gap-2 mt-2">
+                                <div className="h-2 w-2 rounded-full bg-violet-500" />
+                                <p className="text-[11px] text-gray-500">SSL automático e gratuito após verificação do DNS</p>
+                            </div>
+                        </div>
+
+                        {/* Napoleon Host recommendation */}
+                        <div className="rounded-xl bg-gradient-to-r from-violet-600/10 to-purple-600/5 border border-violet-500/10 p-5 flex items-center justify-between">
+                            <div>
+                                <p className="text-sm font-semibold text-white">Precisa de hospedagem?</p>
+                                <p className="text-xs text-gray-400 mt-0.5">Recomendamos a Napoleon Host — performance e suporte premium.</p>
+                            </div>
+                            <a
+                                href="https://painel.napoleon.com.br/aff.php?aff=5426"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="shrink-0 px-4 py-2 rounded-lg bg-violet-600 hover:bg-violet-700 text-white text-xs font-semibold transition-colors"
+                            >
+                                Conhecer Napoleon Host
+                            </a>
+                        </div>
+
+                        {/* Domains list */}
+                        {domains.length > 0 && (
+                            <div className="rounded-xl bg-[#12142a] border border-white/[0.06] overflow-hidden">
+                                <div className="p-4 border-b border-white/[0.06]">
+                                    <h3 className="text-sm font-bold text-white">Seus Domínios</h3>
+                                </div>
+                                <div className="divide-y divide-white/[0.04]">
+                                    {domains.map((d) => (
+                                        <div key={d.id} className="flex items-center justify-between p-4">
+                                            <div>
+                                                <p className="text-sm font-medium text-white">{d.domain}</p>
+                                                <p className="text-[11px] text-gray-600">
+                                                    {sites.find(s => s.id === d.site_id)?.name || "Site removido"}
+                                                </p>
+                                            </div>
+                                            <Badge className={
+                                                d.status === "active"
+                                                    ? "bg-violet-500/20 text-violet-400 border border-violet-500/30"
+                                                    : d.status === "error"
+                                                        ? "bg-red-500/20 text-red-400 border border-red-500/30"
+                                                        : "bg-amber-500/20 text-amber-400 border border-amber-500/30"
+                                            }>
+                                                {d.status === "active" ? "Ativo" : d.status === "error" ? "Erro" : "Pendente"}
+                                            </Badge>
+                                        </div>
+                                    ))}
                                 </div>
                             </div>
-                        ))}
+                        )}
                     </div>
                 )}
             </div>

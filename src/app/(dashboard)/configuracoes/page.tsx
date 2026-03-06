@@ -34,7 +34,7 @@ export default function ConfiguracoesPage() {
     const [pipelineId, setPipelineId] = useState<string | null>(null)
     const [pipelineName, setPipelineName] = useState("")
     const [stages, setStages] = useState<PipelineStage[]>([])
-    const [tab, setTab] = useState<"pipeline" | "geral">("pipeline")
+    const [tab, setTab] = useState<"pipeline" | "geral">("geral")
 
     useEffect(() => {
         fetchPipeline()
@@ -161,22 +161,22 @@ export default function ConfiguracoesPage() {
             </div>
 
             {/* Tabs */}
-            <div className="flex items-center rounded-lg border border-white/10 bg-[#1e1e1e] p-0.5 w-fit">
-                <button
-                    onClick={() => setTab("pipeline")}
-                    className={`flex items-center gap-1.5 px-4 py-2 rounded-md text-xs font-medium transition-colors ${
-                        tab === "pipeline" ? "bg-emerald-500/20 text-emerald-400" : "text-gray-500 hover:text-gray-300"
-                    }`}
-                >
-                    <KanbanSquare className="h-3.5 w-3.5" /> Pipeline CRM
-                </button>
+            <div className="flex items-center rounded-lg border border-white/10 bg-[#12142a] p-0.5 w-fit">
                 <button
                     onClick={() => setTab("geral")}
                     className={`flex items-center gap-1.5 px-4 py-2 rounded-md text-xs font-medium transition-colors ${
-                        tab === "geral" ? "bg-emerald-500/20 text-emerald-400" : "text-gray-500 hover:text-gray-300"
+                        tab === "geral" ? "bg-violet-500/20 text-violet-400" : "text-gray-500 hover:text-gray-300"
                     }`}
                 >
                     <Settings className="h-3.5 w-3.5" /> Geral
+                </button>
+                <button
+                    onClick={() => setTab("pipeline")}
+                    className={`flex items-center gap-1.5 px-4 py-2 rounded-md text-xs font-medium transition-colors ${
+                        tab === "pipeline" ? "bg-violet-500/20 text-violet-400" : "text-gray-500 hover:text-gray-300"
+                    }`}
+                >
+                    <KanbanSquare className="h-3.5 w-3.5" /> Pipeline CRM
                 </button>
             </div>
 
@@ -188,7 +188,7 @@ export default function ConfiguracoesPage() {
                             <Loader2 className="h-6 w-6 animate-spin text-gray-500" />
                         </div>
                     ) : !pipelineId ? (
-                        <div className="rounded-xl bg-[#1e1e1e] border border-white/5 p-12 text-center">
+                        <div className="rounded-xl bg-[#12142a] border border-white/[0.06] p-12 text-center">
                             <KanbanSquare className="h-10 w-10 text-gray-600 mx-auto mb-3" />
                             <h3 className="text-sm font-semibold text-gray-300 mb-1">Nenhum pipeline encontrado</h3>
                             <p className="text-xs text-gray-600">Acesse o CRM para criar seu pipeline automaticamente.</p>
@@ -196,19 +196,19 @@ export default function ConfiguracoesPage() {
                     ) : (
                         <>
                             {/* Pipeline Name */}
-                            <div className="rounded-xl bg-[#1a1a1a] border border-white/5 p-6 space-y-4">
+                            <div className="rounded-xl bg-[#12142a] border border-white/[0.06] p-6 space-y-4">
                                 <div>
                                     <label className="text-xs font-semibold text-gray-400 mb-2 block">Nome do Pipeline</label>
                                     <Input
                                         value={pipelineName}
                                         onChange={(e) => setPipelineName(e.target.value)}
-                                        className="bg-[#161616] border-white/10 text-white max-w-sm h-11"
+                                        className="bg-[#0d0f1a] border-white/[0.06] text-white max-w-sm h-11"
                                     />
                                 </div>
                             </div>
 
                             {/* Stages Editor */}
-                            <div className="rounded-xl bg-[#1a1a1a] border border-white/5 p-6 space-y-4">
+                            <div className="rounded-xl bg-[#12142a] border border-white/[0.06] p-6 space-y-4">
                                 <div className="flex items-center justify-between">
                                     <div>
                                         <h2 className="text-sm font-bold text-white">Estágios do Pipeline</h2>
@@ -226,7 +226,7 @@ export default function ConfiguracoesPage() {
 
                                 <div className="space-y-2">
                                     {stages.map((stage, index) => (
-                                        <div key={stage.id} className="flex items-center gap-3 p-3 rounded-lg bg-[#161616] border border-white/5 group">
+                                        <div key={stage.id} className="flex items-center gap-3 p-3 rounded-lg bg-[#0d0f1a] border border-white/[0.06] group">
                                             <div className="flex flex-col gap-0.5">
                                                 <button
                                                     onClick={() => handleMoveStage(index, "up")}
@@ -286,7 +286,7 @@ export default function ConfiguracoesPage() {
                                 <Button
                                     onClick={handleSave}
                                     disabled={saving}
-                                    className="bg-emerald-600 hover:bg-emerald-700 text-white px-6"
+                                    className="bg-violet-600 hover:bg-violet-700 text-white px-6"
                                 >
                                     {saving ? (
                                         <><Loader2 className="mr-2 h-4 w-4 animate-spin" /> Salvando...</>
@@ -302,7 +302,7 @@ export default function ConfiguracoesPage() {
 
             {/* Geral Tab */}
             {tab === "geral" && (
-                <div className="rounded-xl bg-[#1a1a1a] border border-white/5 p-8 text-center">
+                <div className="rounded-xl bg-[#12142a] border border-white/[0.06] p-8 text-center">
                     <Settings className="h-8 w-8 text-gray-700 mx-auto mb-3" />
                     <p className="text-sm text-gray-400 font-semibold">Configurações gerais em breve</p>
                     <p className="text-xs text-gray-600 mt-1">Perfil, notificações, integrações e preferências do sistema.</p>

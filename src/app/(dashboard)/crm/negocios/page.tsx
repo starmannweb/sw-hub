@@ -146,6 +146,31 @@ export default function CrmDealsPage() {
         if (error) {
             console.error(error)
             loadPipelineData()
+            return
+        }
+
+        // Auto-create proposal when deal moves to a "Proposta" stage
+        const targetStage = stages.find(s => s.id === targetStageId)
+        if (targetStage && targetStage.name.toLowerCase().includes('proposta')) {
+            const { data: { user } } = await supabase.auth.getUser()
+            if (user) {
+                // Check if proposal already exists for this deal
+                const { data: existing } = await supabase
+                    .from('crm_proposals')
+                    .select('id')
+                    .eq('deal_id', draggedDealId)
+                    .limit(1)
+
+                if (!existing || existing.length === 0) {
+                    await supabase.from('crm_proposals').insert({
+                        user_id: user.id,
+                        title: `Proposta — ${dealToMove.title}`,
+                        status: 'draft',
+                        total: dealToMove.value || 0,
+                        deal_id: draggedDealId,
+                    })
+                }
+            }
         }
     }
 
@@ -205,7 +230,7 @@ export default function CrmDealsPage() {
     if (loading) {
         return (
             <div className="flex h-full w-full items-center justify-center pt-20">
-                <Loader2 className="h-8 w-8 animate-spin text-emerald-400" />
+                <Loader2 className="h-8 w-8 animate-spin text-violet-400" />
             </div>
         )
     }
@@ -228,7 +253,7 @@ export default function CrmDealsPage() {
                                 onClick={() => setViewMode('kanban')}
                                 className={`flex items-center gap-1.5 px-3 py-1.5 rounded-md text-xs font-medium transition-colors ${
                                     viewMode === 'kanban'
-                                        ? 'bg-emerald-500/20 text-emerald-400'
+                                        ? 'bg-violet-500/20 text-violet-400'
                                         : 'text-gray-500 hover:text-gray-300'
                                 }`}
                             >
@@ -238,7 +263,7 @@ export default function CrmDealsPage() {
                                 onClick={() => setViewMode('list')}
                                 className={`flex items-center gap-1.5 px-3 py-1.5 rounded-md text-xs font-medium transition-colors ${
                                     viewMode === 'list'
-                                        ? 'bg-emerald-500/20 text-emerald-400'
+                                        ? 'bg-violet-500/20 text-violet-400'
                                         : 'text-gray-500 hover:text-gray-300'
                                 }`}
                             >
@@ -248,7 +273,7 @@ export default function CrmDealsPage() {
 
                         <Button
                             onClick={() => handleQuickAdd(stages[0]?.id)}
-                            className="bg-emerald-600 hover:bg-emerald-700 text-white text-sm"
+                            className="bg-violet-600 hover:bg-violet-700 text-white text-sm"
                         >
                             <Plus className="mr-2 h-4 w-4" /> Novo Negócio
                         </Button>
@@ -262,7 +287,7 @@ export default function CrmDealsPage() {
                         const total = deals.filter(d => d.stage_id === stage.id).reduce((s, d) => s + (d.value || 0), 0)
                         const colorClass = stageColorsDot[stage.color || 'blue'] || 'bg-blue-400'
                         return (
-                            <div key={stage.id} className="flex items-center gap-2 px-3 py-2 rounded-lg bg-[#1e1e1e] border border-white/5 min-w-fit">
+                            <div key={stage.id} className="flex items-center gap-2 px-3 py-2 rounded-lg bg-[#12142a] border border-white/[0.06] min-w-fit">
                                 <div className={`h-2 w-2 rounded-full ${colorClass}`} />
                                 <span className="text-xs text-gray-400 font-medium">{stage.name}</span>
                                 <span className="text-xs text-white font-bold">{count}</span>
@@ -286,7 +311,7 @@ export default function CrmDealsPage() {
                             return (
                                 <div
                                     key={stage.id}
-                                    className="flex flex-col flex-none w-[300px] max-h-full rounded-xl bg-[#1a1a1a] border border-white/5"
+                                    className="flex flex-col flex-none w-[300px] max-h-full rounded-xl bg-[#12142a] border border-white/[0.06]"
                                     onDragOver={handleDragOver}
                                     onDrop={(e) => handleDrop(e, stage.id)}
                                 >
@@ -318,7 +343,7 @@ export default function CrmDealsPage() {
                                                 draggable
                                                 onDragStart={(e) => handleDragStart(e, deal.id)}
                                                 onDragEnd={handleDragEnd}
-                                                className="group cursor-grab active:cursor-grabbing rounded-lg bg-[#242424] border border-white/5 p-3 hover:border-emerald-500/30 transition-all duration-200"
+                                                className="group cursor-grab active:cursor-grabbing rounded-lg bg-[#1a1f3a] border border-white/[0.06] p-3 hover:border-violet-500/30 transition-all duration-200"
                                             >
                                                 <div className="flex items-start justify-between mb-2">
                                                     <div className="space-y-1 pr-2 min-w-0">
@@ -331,7 +356,7 @@ export default function CrmDealsPage() {
                                                 </div>
 
                                                 <div className="flex items-center justify-between text-xs">
-                                                    <div className="flex items-center gap-1.5 font-medium text-emerald-400">
+                                                    <div className="flex items-center gap-1.5 font-medium text-violet-400">
                                                         <DollarSign className="h-3 w-3" />
                                                         {deal.value > 0 ? formatCurrency(deal.value) : '---'}
                                                     </div>
@@ -377,9 +402,9 @@ export default function CrmDealsPage() {
             {/* List View */}
             {viewMode === 'list' && (
                 <div className="flex-1 overflow-y-auto px-4 md:px-8 pb-8 pt-2">
-                    <div className="rounded-xl bg-[#1a1a1a] border border-white/5 overflow-hidden">
+                    <div className="rounded-xl bg-[#12142a] border border-white/[0.06] overflow-hidden">
                         {/* Table Header */}
-                        <div className="grid grid-cols-12 gap-4 p-4 text-[11px] font-semibold text-gray-500 uppercase tracking-wider border-b border-white/5 bg-[#161616]">
+                        <div className="grid grid-cols-12 gap-4 p-4 text-[11px] font-semibold text-gray-500 uppercase tracking-wider border-b border-white/[0.06] bg-[#0d0f1a]">
                             <div className="col-span-4">Negócio</div>
                             <div className="col-span-2">Estágio</div>
                             <div className="col-span-2 text-right">Valor</div>
@@ -415,7 +440,7 @@ export default function CrmDealsPage() {
                                             </div>
 
                                             <div className="col-span-2 text-right">
-                                                <span className="text-sm font-semibold text-emerald-400">
+                                                <span className="text-sm font-semibold text-violet-400">
                                                     {deal.value > 0 ? formatCurrency(deal.value) : '---'}
                                                 </span>
                                             </div>

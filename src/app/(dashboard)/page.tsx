@@ -14,6 +14,13 @@ import {
     MessageCircle,
     Plus,
     Rocket,
+    Headset,
+    Settings2,
+    Palette,
+    Target,
+    GitBranch,
+    Bot,
+    ArrowRight,
 } from "lucide-react"
 
 const features = [
@@ -176,6 +183,78 @@ export default async function DashboardPage() {
                             </div>
                         </Link>
                     ))}
+                </div>
+            </div>
+
+            {/* Suporte & Implantação */}
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                {/* Suporte */}
+                <div className="rounded-xl bg-[#12142a] border border-white/[0.06] p-6">
+                    <div className="flex items-center gap-3 mb-4">
+                        <div className="p-2.5 rounded-xl bg-violet-500/15">
+                            <Headset className="h-5 w-5 text-violet-400" />
+                        </div>
+                        <div>
+                            <h3 className="text-sm font-bold text-white">Suporte</h3>
+                            <p className="text-[11px] text-gray-500">Precisa de ajuda? Estamos aqui.</p>
+                        </div>
+                    </div>
+                    <div className="space-y-2">
+                        <Link href="/suporte" className="flex items-center justify-between p-3 rounded-lg bg-[#0d0f1a] border border-white/[0.06] hover:border-violet-500/20 transition-colors group">
+                            <div className="flex items-center gap-3">
+                                <MessageCircle className="h-4 w-4 text-gray-500 group-hover:text-violet-400 transition-colors" />
+                                <span className="text-sm text-gray-300">Abrir ticket de suporte</span>
+                            </div>
+                            <ArrowRight className="h-4 w-4 text-gray-700 group-hover:text-violet-400 transition-colors" />
+                        </Link>
+                        <Link href="/comunidade" className="flex items-center justify-between p-3 rounded-lg bg-[#0d0f1a] border border-white/[0.06] hover:border-violet-500/20 transition-colors group">
+                            <div className="flex items-center gap-3">
+                                <Users className="h-4 w-4 text-gray-500 group-hover:text-violet-400 transition-colors" />
+                                <span className="text-sm text-gray-300">Comunidade e dúvidas</span>
+                            </div>
+                            <ArrowRight className="h-4 w-4 text-gray-700 group-hover:text-violet-400 transition-colors" />
+                        </Link>
+                        <Link href="/treinamentos" className="flex items-center justify-between p-3 rounded-lg bg-[#0d0f1a] border border-white/[0.06] hover:border-violet-500/20 transition-colors group">
+                            <div className="flex items-center gap-3">
+                                <GraduationCap className="h-4 w-4 text-gray-500 group-hover:text-violet-400 transition-colors" />
+                                <span className="text-sm text-gray-300">Tutoriais em vídeo</span>
+                            </div>
+                            <ArrowRight className="h-4 w-4 text-gray-700 group-hover:text-violet-400 transition-colors" />
+                        </Link>
+                    </div>
+                </div>
+
+                {/* Implantação */}
+                <div className="rounded-xl bg-[#12142a] border border-white/[0.06] p-6">
+                    <div className="flex items-center gap-3 mb-4">
+                        <div className="p-2.5 rounded-xl bg-fuchsia-500/15">
+                            <Settings2 className="h-5 w-5 text-fuchsia-400" />
+                        </div>
+                        <div>
+                            <h3 className="text-sm font-bold text-white">Implantação</h3>
+                            <p className="text-[11px] text-gray-500">Serviços de setup e configuração assistida</p>
+                        </div>
+                    </div>
+                    <div className="space-y-2">
+                        {[
+                            { icon: Settings2, title: "Setup do Sistema", desc: "Configuração inicial completa da plataforma" },
+                            { icon: Palette, title: "Customização", desc: "Personalização visual e funcional do seu Hub" },
+                            { icon: Target, title: "Integração com Ads", desc: "Meta Ads, Google Ads, pixels e conversões" },
+                            { icon: GitBranch, title: "Ajuste de Funil", desc: "Otimização do pipeline e etapas de vendas" },
+                            { icon: Bot, title: "Automações de IA", desc: "Agentes inteligentes e follow-up automatizado" },
+                        ].map((service) => (
+                            <div key={service.title} className="flex items-center gap-3 p-3 rounded-lg bg-[#0d0f1a] border border-white/[0.06] hover:border-fuchsia-500/20 transition-colors group cursor-pointer">
+                                <div className="p-1.5 rounded-lg bg-fuchsia-500/10">
+                                    <service.icon className="h-3.5 w-3.5 text-fuchsia-400/70" />
+                                </div>
+                                <div className="flex-1 min-w-0">
+                                    <p className="text-sm text-gray-300 font-medium">{service.title}</p>
+                                    <p className="text-[10px] text-gray-600">{service.desc}</p>
+                                </div>
+                                <ArrowRight className="h-4 w-4 text-gray-700 group-hover:text-fuchsia-400 transition-colors shrink-0" />
+                            </div>
+                        ))}
+                    </div>
                 </div>
             </div>
         </div>

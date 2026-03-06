@@ -50,13 +50,19 @@ const navigation: NavSection[] = [
         href: "/",
     },
     {
+        title: "Leads",
+        icon: Users,
+        href: "/crm/contatos",
+    },
+    {
         title: "CRM",
         icon: KanbanSquare,
-        items: [
-            { title: "Leads", href: "/crm/contatos", icon: Users },
-            { title: "Pipeline", href: "/crm/negocios", icon: KanbanSquare },
-            { title: "Propostas", href: "/crm/propostas", icon: FileText },
-        ],
+        href: "/crm/negocios",
+    },
+    {
+        title: "Propostas",
+        icon: FileText,
+        href: "/crm/propostas",
     },
     {
         title: "Tarefas",
@@ -72,11 +78,6 @@ const navigation: NavSection[] = [
         title: "Criar Site",
         icon: Globe,
         href: "/sites",
-    },
-    {
-        title: "Domínios",
-        icon: GlobeLock,
-        href: "/dominios",
     },
     {
         title: "Automações",
@@ -122,6 +123,7 @@ const navigation: NavSection[] = [
         title: "Admin",
         icon: ShieldCheck,
         items: [
+            { title: "Painel Admin", href: "/admin", icon: ShieldCheck },
             { title: "Modelos de Sites", href: "/admin/modelos", icon: LayoutTemplate },
             { title: "Materiais de Apoio", href: "/admin/materiais", icon: Download },
         ],
