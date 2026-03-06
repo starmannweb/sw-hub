@@ -126,7 +126,7 @@ export default function AfiliadosPage() {
             <div className="flex items-center justify-between">
                 <div className="flex items-center gap-4">
                     <div className="p-3 rounded-xl bg-violet-600/20">
-                        <Users className="h-6 w-6 text-violet-400" />
+                        <Megaphone className="h-6 w-6 text-violet-400" />
                     </div>
                     <div>
                         <h1 className="text-2xl font-bold text-white">Programa de Afiliados</h1>

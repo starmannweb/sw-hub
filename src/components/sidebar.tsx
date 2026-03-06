@@ -86,7 +86,7 @@ const navigation: NavSection[] = [
     },
     {
         title: "Afiliados",
-        icon: Users,
+        icon: Megaphone,
         href: "/afiliados",
     },
     {
